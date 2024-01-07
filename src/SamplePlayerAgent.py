@@ -15,12 +15,12 @@ class SamplePlayerAgent(IAgent, ABC):
         self.playerTypes: dict[pb2.PlayerType] = {}
         self.wm: pb2.WorldModel = None
     
-    def get_actions(self, wm:pb2.WorldModel) -> pb2.Actions:
+    def get_actions(self, wm:pb2.WorldModel) -> pb2.PlayerActions:
         self.wm = wm
         self.actions.clear()
         self.strategy.update(wm)
         self.decisionMaker.make_decision(self)
-        actions = pb2.Actions()
+        actions = pb2.PlayerActions()
         actions.actions.extend(self.actions)
         return actions
     

@@ -17,10 +17,10 @@ class NoBallDecisionMaker(IDecisionMaker):
         opponent_reach_steps = agent.wm.intercept_table.first_opponent_reach_steps
         
         if our_reach_steps < opponent_reach_steps and self_reach_steps < teammate_reach_steps:
-            agent.add_action(pb2.Action(body_intercept=pb2.Body_Intercept(save_recovery=False,
+            agent.add_action(pb2.PlayerAction(body_intercept=pb2.Body_Intercept(save_recovery=False,
                                                                           face_point=pb2.Vector2D( x=agent.wm.ball.position.x,
                                                                        y=agent.wm.ball.position.y))))
-            agent.add_action(pb2.Action(neck_turn_to_ball=pb2.Neck_TurnToBall()))
+            agent.add_action(pb2.PlayerAction(neck_turn_to_ball=pb2.Neck_TurnToBall()))
             return
         
         pos = agent.get_strategy().getPosition(agent.wm.self.uniform_number)
@@ -30,9 +30,9 @@ class NoBallDecisionMaker(IDecisionMaker):
             if BHV_Block().execute(agent):
                 return
             
-        agent.add_action(pb2.Action(body_go_to_point=pb2.Body_GoToPoint(target_point=pb2.Vector2D(x=pos.x(), y=pos.y()),
+        agent.add_action(pb2.PlayerAction(body_go_to_point=pb2.Body_GoToPoint(target_point=pb2.Vector2D(x=pos.x(), y=pos.y()),
                                                                         distance_threshold=1,
                                                                         max_dash_power=100)))
-        agent.add_action(pb2.Action(neck_turn_to_ball=pb2.Neck_TurnToBall()))
-        agent.add_action(pb2.Action(debug_client=pb2.DebugClient(message=f"go to : {pos.x()}, {pos.y()}")))
+        agent.add_action(pb2.PlayerAction(neck_turn_to_ball=pb2.Neck_TurnToBall()))
+        agent.add_action(pb2.PlayerAction(debug_client=pb2.DebugClient(message=f"go to : {pos.x()}, {pos.y()}")))
         

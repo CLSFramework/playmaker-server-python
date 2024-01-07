@@ -62,8 +62,8 @@ class BHV_Block:
             agent.add_log_text(pb2.LoggerLevel.BLOCK, f"### block cycle: {block_cycle}")
         agent.add_log_text(pb2.LoggerLevel.BLOCK, f"### best blocker: {blocker}")
         if blocker == agent.wm.self.uniform_number:
-            agent.add_action(pb2.Action(body_go_to_point=pb2.Body_GoToPoint(target_point=pb2.Vector2D(x=block_pos.x(), y=block_pos.y()), distance_threshold=0.5, max_dash_power=100)))
-            agent.add_action(pb2.Action(neck_turn_to_ball=pb2.Neck_TurnToBall()))
-            agent.add_action(pb2.Action(debug_client=pb2.DebugClient(message=f"blocker: {blocker}")))
+            agent.add_action(pb2.PlayerAction(body_go_to_point=pb2.Body_GoToPoint(target_point=pb2.Vector2D(x=block_pos.x(), y=block_pos.y()), distance_threshold=0.5, max_dash_power=100)))
+            agent.add_action(pb2.PlayerAction(neck_turn_to_ball=pb2.Neck_TurnToBall()))
+            agent.add_action(pb2.PlayerAction(debug_client=pb2.DebugClient(message=f"blocker: {blocker}")))
             return True
         return False
