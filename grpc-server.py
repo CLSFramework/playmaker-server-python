@@ -29,18 +29,6 @@ class Game(pb2_grpc.GameServicer):
         actions = self.trainer_agent.get_actions(request.world_model)
         return actions
     
-    def GetCoachActions(self, request, context):
-        actions = pb2.CoachActions()
-        actions.actions.append(pb2.CoachAction(change_player_types=pb2.ChangePlayerType()))
-        actions.actions.append(pb2.CoachAction(do_helios_say_player_types=pb2.DoHeliosSayPlayerTypes()))
-        actions.actions.append(pb2.CoachAction(do_helios_substitute=pb2.DoHeliosSubstitute()))
-        return actions
-    
-    def GetTrainerActions(self, request, context):
-        actions = pb2.TrainerActions()
-        actions.actions.append(pb2.TrainerAction(do_move_ball=pb2.DoMoveBall(pb2.Vector2D(x=0, y=0))))
-        return actions
-    
     def SendServerParams(self, request: pb2.ServerParam, context):
         self.player_agent.set_params(request)
         self.coach_agent.set_params(request)
