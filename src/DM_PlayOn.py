@@ -12,10 +12,10 @@ class PlayOnDecisionMaker(IDecisionMaker):
         pass
     
     def make_decision(self, agent: IAgent):
-        # agent.addAction(pb2.Action(dash=pb2.Dash(power=100, relative_direction=30)))
+        # agent.addAction(pb2.PlayerAction(dash=pb2.Dash(power=100, relative_direction=30)))
         if agent.wm.self.is_kickable:
             self.withBallDecisionMaker.make_decision(agent)
-            # agent.add_action(pb2.Action(helios_chain_action=pb2.HeliosChainAction(
+            # agent.add_action(pb2.PlayerAction(helios_chain_action=pb2.HeliosChainAction(
             #     cross=True,
             #     lead_pass=True,
             #     direct_pass=True,

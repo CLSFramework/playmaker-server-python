@@ -9,7 +9,7 @@ class IAgent(ABC):
     def __init__(self) -> None:
         super().__init__()
         self.wm: Union[pb2.WorldModel, None] = None
-        self.actions: list = []
+        self.actions: list[pb2.PlayerAction] = []
         self.serverParams: Union[pb2.ServerParam, None] = None
         self.playerParams: Union[pb2.PlayerParam, None] = None
         self.playerTypes: Union[pb2.PlayerType, dict[pb2.PlayerType]] = {}
@@ -24,9 +24,9 @@ class IAgent(ABC):
     def get_actions(self, wm: pb2.WorldModel) -> pb2.PlayerActions:
         pass
 
-    @abstractmethod
-    def get_strategy(self) -> IPositionStrategy:
-        pass
+    # @abstractmethod
+    # def get_strategy(self) -> IPositionStrategy:
+    #     pass
 
     def set_debug_mode(self, debug_mode: bool):
         self.debug_mode = debug_mode

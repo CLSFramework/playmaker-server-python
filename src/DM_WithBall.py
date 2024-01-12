@@ -24,7 +24,7 @@ class WithBallDecisionMaker(IDecisionMaker):
         candidate_actions += self.dribble_generator.generator(agent)
 
         if len(candidate_actions) == 0:
-            agent.add_action(pb2.Action(body_hold_ball=pb2.Body_HoldBall()))
+            agent.add_action(pb2.PlayerAction(body_hold_ball=pb2.Body_HoldBall()))
             return
 
         if agent.debug_mode:
