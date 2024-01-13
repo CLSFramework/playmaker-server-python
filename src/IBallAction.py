@@ -114,7 +114,7 @@ class PassAction(BallAction):
         start_step = max(max(min_receive_step, min_ball_step), 0)
         max_step = start_step + 2
         if agent.debug_mode:
-            agent.add_log_text(pb2.LoggerLevel.PASS, f">>>> DPass to {tm.uniform_number} ({round(tm_pos.x(), 2)}, {round(tm_pos.y(), 2)}) -> ({round(receive_point.x(), 2)}, {round(receive_point.y(), 2)}) start_step: {start_step}, max_step: {max_step}")
+            agent.add_log_text(pb2.LoggerLevel.PASS, f">>>> DPass to {tm.uniform_number} ({round(tm.position.x(), 2)}, {round(tm.position.y(), 2)}) -> ({round(receive_point.x(), 2)}, {round(receive_point.y(), 2)}) start_step: {start_step}, max_step: {max_step}")
 
         self.create_pass(agent, tm, receive_point,
                     start_step, max_step, min_ball_speed,
