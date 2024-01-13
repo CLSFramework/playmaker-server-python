@@ -43,10 +43,10 @@ class WithBallDecisionMaker(IDecisionMaker):
         WithBallDecisionMaker.count += 1
         print(f"{agent.wm.cycle} {i} {len(candidate_actions)} {float(i) / len(candidate_actions)} {candidate.score} {end_time - start_time} {WithBallDecisionMaker.sum_time / WithBallDecisionMaker.count}")
         if best_action is None:
-            agent.add_action(pb2.Action(body_hold_ball=pb2.Body_HoldBall()))
+            agent.add_action(pb2.PlayerAction(body_hold_ball=pb2.Body_HoldBall()))
             return
         
-        agent.add_action(pb2.Action(body_smart_kick=pb2.Body_SmartKick(
+        agent.add_action(pb2.PlayerAction(body_smart_kick=pb2.Body_SmartKick(
             target_point=pb2.Vector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
             first_speed=best_action.firstVelocity.r(),
             first_speed_threshold=0.0,

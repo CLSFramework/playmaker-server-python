@@ -1,3 +1,4 @@
+from typing import Union
 from abc import ABC, abstractmethod
 import service_pb2 as pb2
 from src.IPositionStrategy import IPositionStrategy
@@ -8,7 +9,7 @@ class IAgent(ABC):
     def __init__(self) -> None:
         super().__init__()
         self.wm: Union[pb2.WorldModel, None] = None
-        self.actions: list[pb2.Action] = []
+        self.actions: list = []
         self.serverParams: Union[pb2.ServerParam, None] = None
         self.playerParams: Union[pb2.PlayerParam, None] = None
         self.playerTypes: Union[pb2.PlayerType, dict[pb2.PlayerType]] = {}
@@ -20,7 +21,7 @@ class IAgent(ABC):
         return self.playerTypes[id]
     
     @abstractmethod
-    def get_actions(self, wm: pb2.WorldModel) -> pb2.Actions:
+    def get_actions(self, wm: pb2.WorldModel) -> pb2.PlayerActions:
         pass
 
     @abstractmethod
@@ -46,7 +47,7 @@ class IAgent(ABC):
     def add_log_text(self, level: pb2.LoggerLevel, message: str):
         if not self.debug_mode:
             return
-        self.add_action(pb2.Action(
+        self.add_action(pb2.PlayerAction(
             log=pb2.Log(
                 add_text=pb2.AddText(
                     level=level,
@@ -58,7 +59,7 @@ class IAgent(ABC):
     def add_log_message(self, level: pb2.LoggerLevel, message: str, x, y, color):
         if not self.debug_mode:
             return
-        self.add_action(pb2.Action(
+        self.add_action(pb2.PlayerAction(
             log=pb2.Log(
                 add_message=pb2.AddMessage(
                     level=level,
@@ -73,7 +74,7 @@ class IAgent(ABC):
                        fill: bool):
         if not self.debug_mode:
             return
-        self.add_action(pb2.Action(
+        self.add_action(pb2.PlayerAction(
             log=pb2.Log(
                 add_circle=pb2.AddCircle(
                     level=level,
@@ -85,5 +86,5 @@ class IAgent(ABC):
             )
         ))
 
-    def add_action(self, actions: pb2.Action):
+    def add_action(self, actions: Union[pb2.PlayerAction, pb2.CoachAction, pb2.TrainerAction]):
         self.actions.append(actions)

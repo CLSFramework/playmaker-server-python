@@ -14,10 +14,20 @@ class GameStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetActions = channel.unary_unary(
-                '/protos.Game/GetActions',
+        self.GetPlayerActions = channel.unary_unary(
+                '/protos.Game/GetPlayerActions',
                 request_serializer=service__pb2.State.SerializeToString,
-                response_deserializer=service__pb2.Actions.FromString,
+                response_deserializer=service__pb2.PlayerActions.FromString,
+                )
+        self.GetCoachActions = channel.unary_unary(
+                '/protos.Game/GetCoachActions',
+                request_serializer=service__pb2.State.SerializeToString,
+                response_deserializer=service__pb2.CoachActions.FromString,
+                )
+        self.GetTrainerActions = channel.unary_unary(
+                '/protos.Game/GetTrainerActions',
+                request_serializer=service__pb2.State.SerializeToString,
+                response_deserializer=service__pb2.TrainerActions.FromString,
                 )
         self.SendInitMessage = channel.unary_unary(
                 '/protos.Game/SendInitMessage',
@@ -44,7 +54,19 @@ class GameStub(object):
 class GameServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetActions(self, request, context):
+    def GetPlayerActions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetCoachActions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetTrainerActions(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -77,10 +99,20 @@ class GameServicer(object):
 
 def add_GameServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetActions': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetActions,
+            'GetPlayerActions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetPlayerActions,
                     request_deserializer=service__pb2.State.FromString,
-                    response_serializer=service__pb2.Actions.SerializeToString,
+                    response_serializer=service__pb2.PlayerActions.SerializeToString,
+            ),
+            'GetCoachActions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetCoachActions,
+                    request_deserializer=service__pb2.State.FromString,
+                    response_serializer=service__pb2.CoachActions.SerializeToString,
+            ),
+            'GetTrainerActions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetTrainerActions,
+                    request_deserializer=service__pb2.State.FromString,
+                    response_serializer=service__pb2.TrainerActions.SerializeToString,
             ),
             'SendInitMessage': grpc.unary_unary_rpc_method_handler(
                     servicer.SendInitMessage,
@@ -113,7 +145,7 @@ class Game(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def GetActions(request,
+    def GetPlayerActions(request,
             target,
             options=(),
             channel_credentials=None,
@@ -123,9 +155,43 @@ class Game(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/protos.Game/GetActions',
+        return grpc.experimental.unary_unary(request, target, '/protos.Game/GetPlayerActions',
             service__pb2.State.SerializeToString,
-            service__pb2.Actions.FromString,
+            service__pb2.PlayerActions.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetCoachActions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/protos.Game/GetCoachActions',
+            service__pb2.State.SerializeToString,
+            service__pb2.CoachActions.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetTrainerActions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/protos.Game/GetTrainerActions',
+            service__pb2.State.SerializeToString,
+            service__pb2.TrainerActions.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

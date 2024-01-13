@@ -12,11 +12,11 @@ class DecisionMaker(IDecisionMaker):
     
     def make_decision(self, agent: IAgent):
         if agent.wm.self.is_goalie:
-            agent.add_action(pb2.Action(helios_goalie=pb2.HeliosGoalie()))
+            agent.add_action(pb2.PlayerAction(helios_goalie=pb2.HeliosGoalie()))
         else:
             if agent.wm.game_mode_type == pb2.GameModeType.PlayOn:
                 self.playOnDecisionMaker.make_decision(agent)
             elif agent.wm.is_penalty_kick_mode:
-                agent.add_action(pb2.Action(helios_penalty=pb2.HeliosPenalty()))
+                agent.add_action(pb2.PlayerAction(helios_penalty=pb2.HeliosPenalty()))
             else:
-                agent.add_action(pb2.Action(helios_set_play=pb2.HeliosSetPlay()))
+                agent.add_action(pb2.PlayerAction(helios_set_play=pb2.HeliosSetPlay()))
