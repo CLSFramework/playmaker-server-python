@@ -1,0 +1,30 @@
+version: '3.8'
+
+networks:
+  host:
+    external: true
+    name: host
+
+services:
+  right_team: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TEAM_NAME=right_team
+    container_name: right_team_all
+    network_mode: "host"
+
+  left_team: 
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TEAM_NAME=left_team
+    container_name: left_team_all
+    network_mode: "host"
+
+  rcssserver:
+    image: sadraiiali/rcssserver:latest
+    container_name: rcssserver
+    network_mode: "host"
