@@ -41,7 +41,7 @@ class Game(pb2_grpc.GameServicer):
         self.trainer_agent.set_params(request)
         return pb2.Empty()
     
-    def SendPlayerType(self, request: pb2.PlayerType, context):
+    def SendPlayerType(self, request: pb2.PlaxyerType, context):
         self.player_agent.set_params(request)
         self.coach_agent.set_params(request)
         self.trainer_agent.set_params(request)
