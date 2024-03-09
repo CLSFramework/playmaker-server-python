@@ -20,6 +20,7 @@ class SampleTrainerAgent(IAgent, ABC):
         print(f'cycle: {self.wm.ball.position.x}, {self.wm.ball.position.y}')
         
         if self.wm.cycle % 100 == 0:
+            print("Sending trainer action")
             actions.actions.append(
                 pb2.TrainerAction(
                     do_move_ball=pb2.DoMoveBall(
