@@ -26,6 +26,7 @@ class Game(pb2_grpc.GameServicer):
         return actions
     
     def GetTrainerActions(self, request:pb2.State, context):
+        print(f"Fullstate wm time:{request.full_world_model.cycle}")
         actions = self.trainer_agent.get_actions(request.world_model)
         return actions
     
@@ -41,7 +42,7 @@ class Game(pb2_grpc.GameServicer):
         self.trainer_agent.set_params(request)
         return pb2.Empty()
     
-    def SendPlayerType(self, request: pb2.PlaxyerType, context):
+    def SendPlayerType(self, request: pb2.PlayerType, context):
         self.player_agent.set_params(request)
         self.coach_agent.set_params(request)
         self.trainer_agent.set_params(request)
