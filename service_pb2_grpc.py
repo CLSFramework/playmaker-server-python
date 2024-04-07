@@ -49,6 +49,11 @@ class GameStub(object):
                 request_serializer=service__pb2.PlayerType.SerializeToString,
                 response_deserializer=service__pb2.Empty.FromString,
                 )
+        self.GetInitMessage = channel.unary_unary(
+                '/protos.Game/GetInitMessage',
+                request_serializer=service__pb2.Empty.SerializeToString,
+                response_deserializer=service__pb2.InitMessageFromServer.FromString,
+                )
 
 
 class GameServicer(object):
@@ -96,6 +101,12 @@ class GameServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetInitMessage(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_GameServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -133,6 +144,11 @@ def add_GameServicer_to_server(servicer, server):
                     servicer.SendPlayerType,
                     request_deserializer=service__pb2.PlayerType.FromString,
                     response_serializer=service__pb2.Empty.SerializeToString,
+            ),
+            'GetInitMessage': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetInitMessage,
+                    request_deserializer=service__pb2.Empty.FromString,
+                    response_serializer=service__pb2.InitMessageFromServer.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -260,5 +276,22 @@ class Game(object):
         return grpc.experimental.unary_unary(request, target, '/protos.Game/SendPlayerType',
             service__pb2.PlayerType.SerializeToString,
             service__pb2.Empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetInitMessage(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/protos.Game/GetInitMessage',
+            service__pb2.Empty.SerializeToString,
+            service__pb2.InitMessageFromServer.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

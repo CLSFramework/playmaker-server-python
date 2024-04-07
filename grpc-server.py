@@ -51,6 +51,9 @@ class Game(pb2_grpc.GameServicer):
         self.player_agent.set_debug_mode(request.debug_mode)
         print("Debug mode: ", request.debug_mode)
         return pb2.Empty()
+    
+    def GetInitMessage(self, request, context):
+        return pb2.InitMessageFromServer()
 
 
 def serve():
