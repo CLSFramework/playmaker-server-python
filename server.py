@@ -11,12 +11,13 @@ import os
 
 lock = RLock()
 
-
 class Game(pb2_grpc.GameServicer):
     def __init__(self):
         self.player_agent = SamplePlayerAgent()
         self.coach_agent = SampleCoachAgent()
         self.trainer_agent = SampleTrainerAgent()
+        self.number_of_connections = 0
+        self.lock = RLock()
     
     def GetPlayerActions(self, request:pb2.State, context):
         actions = self.player_agent.get_actions(request.world_model)
@@ -54,7 +55,19 @@ class Game(pb2_grpc.GameServicer):
         return pb2.Empty()
     
     def GetInitMessage(self, request, context):
+        with self.lock:
+            self.number_of_connections += 1
+        print(f'{"#"*20} n={self.number_of_connections} {"#"*20}')
         return pb2.InitMessageFromServer()
+    
+    def SendByeCommand(self, request, context):
+        print("Bye command received")
+        print(f'{"#"*20} n={self.number_of_connections} {"#"*20}')
+        with self.lock:
+            self.number_of_connections -= 1
+        if self.number_of_connections <= 0:
+            os._exit(0)
+        return pb2.Empty()
 
 
 def serve():
