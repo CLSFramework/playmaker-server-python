@@ -21,10 +21,10 @@ rcssserver
 soccerwindow2
 ```
 
-- run the ```grpc-server``` using the following command:
+- run the ```server``` using the following command:
 ```bash
 cd path/to/playmaker-server-python
-python grpc-server.py
+python server.py
 ```
 
 - run the agents using the following command:
@@ -34,7 +34,7 @@ cd path/to/soccer-simulation-proxy/build/bin/
 ```
 Note that if you want to use the debug tools of the ```soccerwindow2```, you have to run the ```./start-debug.sh``` instead of the ```./start.sh```.
 
-Also, instead of running the ```grpc-server``` and the agents separately, you can run the ```grpc-server``` and the agents in the same time using the following command:
+Also, instead of running the ```server``` and the agents separately, you can run the ```server``` and the agents in the same time using the following command:
 ```bash
 cd path/to/playmaker-server-python
 ./start-team.sh
