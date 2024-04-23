@@ -1,3 +1,4 @@
+from time import sleep
 import service_pb2_grpc as pb2_grpc
 import service_pb2 as pb2
 import google.protobuf
@@ -6,10 +7,9 @@ import grpc
 from src.SamplePlayerAgent import SamplePlayerAgent
 from src.SampleCoachAgent import SampleCoachAgent
 from src.SampleTrainerAgent import SampleTrainerAgent
-from threading import RLock
+from threading import Semaphore
 import os
 
-lock = RLock()
 
 class Game(pb2_grpc.GameServicer):
     def __init__(self):
@@ -17,7 +17,8 @@ class Game(pb2_grpc.GameServicer):
         self.coach_agent = SampleCoachAgent()
         self.trainer_agent = SampleTrainerAgent()
         self.number_of_connections = 0
-        self.lock = RLock()
+        self.lock = Semaphore()
+        self.running = Semaphore()
     
     def GetPlayerActions(self, request:pb2.State, context):
         actions = self.player_agent.get_actions(request.world_model)
@@ -66,16 +67,23 @@ class Game(pb2_grpc.GameServicer):
         with self.lock:
             self.number_of_connections -= 1
         if self.number_of_connections <= 0:
-            os._exit(0)
+            self.running.release()
         return pb2.Empty()
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=22))
-    pb2_grpc.add_GameServicer_to_server(Game(), server)
+    game_service = Game()
+    game_service.running.acquire()
+    pb2_grpc.add_GameServicer_to_server(game_service, server)
     server.add_insecure_port('[::]:50051')
     server.start()
     print("Server started at port 50051")
+
+    game_service.running.acquire()
+    print("Stopping server")
+    sleep(1)
+    os._exit(0)
     server.wait_for_termination()
 
 
