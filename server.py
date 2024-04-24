@@ -52,18 +52,14 @@ class Game(pb2_grpc.GameServicer):
     
     def SendInitMessage(self, request, context):
         self.player_agent.set_debug_mode(request.debug_mode)
-        print("Debug mode: ", request.debug_mode)
         return pb2.Empty()
     
     def GetInitMessage(self, request, context):
         with self.lock:
             self.number_of_connections += 1
-        print(f'{"#"*20} n={self.number_of_connections} {"#"*20}')
         return pb2.InitMessageFromServer()
     
     def SendByeCommand(self, request, context):
-        print("Bye command received")
-        print(f'{"#"*20} n={self.number_of_connections} {"#"*20}')
         with self.lock:
             self.number_of_connections -= 1
         if self.number_of_connections <= 0:
