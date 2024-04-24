@@ -2,6 +2,6 @@
 
 python server.py &
 
-cd ../soccer-simulation-proxy
+cd soccer-simulation-proxy
 
 ./start.sh
