@@ -49,6 +49,7 @@ The server should be run before the soccer-simulation-proxy agents.
 
 ```bash
 cd rcssserver
+chmod 777 rcssserver-x86_64.AppImage
 ./rcssserver-x86_64.AppImage
 ```
 
