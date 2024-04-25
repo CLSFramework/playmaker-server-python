@@ -20,7 +20,7 @@ In this page, we will show the simplest way to start a game.
 
 ### Clone the repository
 ```bash
-git clone git@github.com:CLSFramework/playmaker-server-python.git
+git clone https://github.com/CLSFramework/playmaker-server-python.git
 cd playmaker-server-python
 ```
 
