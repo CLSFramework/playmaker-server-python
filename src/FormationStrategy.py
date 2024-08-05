@@ -1,8 +1,8 @@
-import service_pb2 as pb2
 from src.IPositionStrategy import IPositionStrategy
 from src.delaunay_triangulation import *
 from enum import Enum
 from pyrusgeom.soccer_math import *
+from soccer.ttypes import WorldModel
 
 class Situation(Enum):
     OurSetPlay_Situation = 0,
@@ -25,7 +25,7 @@ class FormationStrategy(IPositionStrategy):
         self.current_situation = Situation.Offense_Situation
         self.current_formation = self.offense_formation
 
-    def update(self, wm: pb2.WorldModel):
+    def update(self, wm: WorldModel):
         tm_min = wm.intercept_table.first_teammate_reach_steps
         opp_min = wm.intercept_table.first_opponent_reach_steps
         self_min = wm.intercept_table.self_reach_steps
@@ -39,7 +39,7 @@ class FormationStrategy(IPositionStrategy):
             thr = 0
             if ball_pos.x() > 0:
                 thr += 1
-            if wm.self.uniform_number > 6:
+            if wm.myself.uniform_number > 6:
                 thr += 1
             if min(tm_min, self_min) < opp_min + thr:
                 self.current_situation = Situation.Offense_Situation

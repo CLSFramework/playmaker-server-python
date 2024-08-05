@@ -1,4 +1,4 @@
-import service_pb2 as pb2
+from soccer.ttypes import HeliosGoalie, HeliosPenalty, HeliosSetPlay, GameModeType, PlayerAction
 from src.IDecisionMaker import IDecisionMaker
 from src.DM_PlayOn import PlayOnDecisionMaker
 from src.DM_SetPlay import SetPlayDecisionMaker
@@ -11,12 +11,17 @@ class DecisionMaker(IDecisionMaker):
         self.setPlayDecisionMaker = SetPlayDecisionMaker()
     
     def make_decision(self, agent: IAgent):
-        if agent.wm.self.is_goalie:
-            agent.add_action(pb2.PlayerAction(helios_goalie=pb2.HeliosGoalie()))
+        if agent.wm.myself.is_goalie:
+            print("make_decision: is_goalie")
+            agent.add_action(PlayerAction(helios_goalie=HeliosGoalie()))
         else:
-            if agent.wm.game_mode_type == pb2.GameModeType.PlayOn:
+            print("make_decision: not is_goalie")
+            if agent.wm.game_mode_type == GameModeType.PlayOn:
+                print("make_decision: PlayOnDecisionMaker")
                 self.playOnDecisionMaker.make_decision(agent)
             elif agent.wm.is_penalty_kick_mode:
-                agent.add_action(pb2.PlayerAction(helios_penalty=pb2.HeliosPenalty()))
+                print("make_decision: PenaltyKickDecisionMaker")
+                agent.add_action(PlayerAction(helios_penalty=HeliosPenalty()))
             else:
-                agent.add_action(pb2.PlayerAction(helios_set_play=pb2.HeliosSetPlay()))
+                print("make_decision: SetPlayDecisionMaker")
+                agent.add_action(PlayerAction(helios_set_play=HeliosSetPlay()))

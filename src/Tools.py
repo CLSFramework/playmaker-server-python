@@ -1,13 +1,13 @@
-import service_pb2 as pb2
 import pyrusgeom.soccer_math as smath
 from pyrusgeom.soccer_math import *
 from pyrusgeom.geom_2d import *
 from src.IAgent import IAgent
 import math
+from soccer.ttypes import PlayerType, GameModeType, Player, ServerParam
 
 class Tools:
     @staticmethod
-    def inertia_final_point(playerType: pb2.PlayerType, position: Vector2D, velocity: Vector2D) -> Vector2D:
+    def inertia_final_point(playerType: PlayerType, position: Vector2D, velocity: Vector2D) -> Vector2D:
         return smath.inertia_final_point(position, velocity, playerType.player_decay)
         
     @staticmethod
@@ -20,11 +20,11 @@ class Tools:
         
     @staticmethod
     def predict_kick_count(agent: IAgent, kicker_uniform_number, first_ball_speed, ball_move_angle: AngleDeg):
-        if agent.wm.game_mode_type not in [pb2.GameModeType.PlayOn, pb2.GameModeType.PenaltyKick_]:
+        if agent.wm.game_mode_type not in [GameModeType.PlayOn, GameModeType.PenaltyKick_]:
             return 1
 
-        if kicker_uniform_number == agent.wm.self.uniform_number and agent.wm.self.is_kickable:
-            max_vel = Tools.calc_max_velocity(ball_move_angle, agent.wm.self.kick_rate, Tools.vector2d_message_to_vector2d(agent.wm.ball.velocity), agent.serverParams)
+        if kicker_uniform_number == agent.wm.myself.uniform_number and agent.wm.myself.is_kickable:
+            max_vel = Tools.calc_max_velocity(ball_move_angle, agent.wm.myself.kick_rate, Tools.vector2d_message_to_vector2d(agent.wm.ball.velocity), agent.serverParams)
             if max_vel.r() >= first_ball_speed:
                 return 1
         if first_ball_speed > 2.5:
@@ -37,7 +37,7 @@ class Tools:
     def calc_max_velocity(target_angle: AngleDeg,
                       krate,
                       ball_vel: Vector2D,
-                      sp: pb2.ServerParam):
+                      sp: ServerParam):
         ball_speed_max2 = sp.ball_speed_max ** 2
         max_accel = min(sp.max_power * krate,
                         sp.ball_accel_max)
@@ -99,11 +99,11 @@ class Tools:
         return smath.inertia_n_step_point(initial_pos, initial_vel, n_step, player_decay)
     
     @staticmethod
-    def vector2d_message_to_vector2d(v: pb2.Vector2D):
+    def vector2d_message_to_vector2d(v: Vector2D):
         return Vector2D(v.x, v.y)
     
     @staticmethod
-    def estimate_virtual_dash_distance(player: pb2.Player, real_speed_max: float):
+    def estimate_virtual_dash_distance(player: Player, real_speed_max: float):
         pos_count = min(10, player.pos_count, player.seen_pos_count)
         max_speed = real_speed_max * 0.8
 
@@ -131,7 +131,7 @@ class Tools:
         # return cycle
         
     @staticmethod
-    def predict_player_turn_cycle(sp: pb2.ServerParam, ptype: pb2.PlayerType, player_body: AngleDeg, player_speed, target_dist,
+    def predict_player_turn_cycle(sp: ServerParam, ptype: PlayerType, player_body: AngleDeg, player_speed, target_dist,
                                   target_angle: AngleDeg, dist_thr, use_back_dash):
         n_turn = 0
         angle_diff = (target_angle - player_body).abs()
@@ -170,7 +170,7 @@ class Tools:
         return best_player
     
     @staticmethod
-    def predict_opponent_reach_step(agent: IAgent, opponent: pb2.Player, first_ball_pos: Vector2D, first_ball_vel: Vector2D,
+    def predict_opponent_reach_step(agent: IAgent, opponent: Player, first_ball_pos: Vector2D, first_ball_vel: Vector2D,
                                     ball_move_angle: AngleDeg, receive_point: Vector2D, max_cycle, description):
         sp = agent.serverParams
 
@@ -180,7 +180,7 @@ class Tools:
 
         opp_pos = Vector2D(opponent.position.x, opponent.position.y)
         opp_vel = Vector2D(opponent.velocity.x, opponent.velocity.y)
-        ptype:pb2.PlayerType = agent.get_type(opponent.type_id)
+        ptype:PlayerType = agent.get_type(opponent.type_id)
         min_cycle = Tools.estimate_min_reach_cycle(opp_pos, ptype.real_speed_max, first_ball_pos,
                                                    ball_move_angle)
 

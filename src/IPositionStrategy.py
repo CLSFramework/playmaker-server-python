@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-import service_pb2 as pb2
 from pyrusgeom.soccer_math import *
 from pyrusgeom.geom_2d import *
+from soccer.ttypes import WorldModel
 
 
 class IPositionStrategy(ABC):
@@ -10,6 +10,6 @@ class IPositionStrategy(ABC):
         pass
     
     @abstractmethod
-    def update(self, wm: pb2.WorldModel):
+    def update(self, wm: WorldModel):
         pass
     

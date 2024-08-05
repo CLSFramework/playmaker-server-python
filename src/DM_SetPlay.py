@@ -1,11 +1,11 @@
-import service_pb2 as pb2
 from src.IDecisionMaker import IDecisionMaker
 from src.IAgent import IAgent
+from soccer.ttypes import PlayerAction, Turn, WorldModel
 
 
 class SetPlayDecisionMaker(IDecisionMaker):
     def __init__(self):
         pass
     
-    def make_decision(self, agent: IAgent, wm: pb2.WorldModel):
-        agent.add_action(pb2.PlayerAction(turn=pb2.Turn(relative_direction=30.0)))
+    def make_decision(self, agent: IAgent, wm: WorldModel):
+        agent.add_action(PlayerAction(turn=Turn(relative_direction=30.0)))

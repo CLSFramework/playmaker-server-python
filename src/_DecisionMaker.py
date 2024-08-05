@@ -8,11 +8,11 @@ class DecisionMaker(IDecisionMaker):
         pass
     
     def make_decision(self, agent: IAgent):
-        if agent.wm.self.is_goalie:
+        if agent.wm.myself.is_goalie:
             agent.add_action(pb2.PlayerAction(helios_goalie=pb2.HeliosGoalie()))
         else:
             if agent.wm.game_mode_type == pb2.GameModeType.PlayOn:
-                if agent.wm.self.is_kickable:
+                if agent.wm.myself.is_kickable:
                     if agent.wm.ball.position.x < 30:
                         agent.add_action(pb2.PlayerAction(helios_chain_action=pb2.HeliosChainAction(cross=False, 
                                                                                                     direct_pass=True, 

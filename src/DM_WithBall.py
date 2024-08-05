@@ -1,6 +1,5 @@
 # from pyparsing import col
 from src.GEN_Dribble import GeneratorDribble
-import service_pb2 as pb2
 from src.IDecisionMaker import IDecisionMaker
 from src.IAgent import IAgent
 from pyrusgeom.soccer_math import *
@@ -8,6 +7,7 @@ from pyrusgeom.geom_2d import *
 from src.GEN_Pass import GeneratorPass
 from src.IBallAction import BallAction
 import time
+from soccer.ttypes import LoggerLevel, PlayerAction, Body_HoldBall, Neck_ScanField, Body_SmartKick, ThriftVector2D
 
 class WithBallDecisionMaker(IDecisionMaker):
     def __init__(self):
@@ -24,12 +24,12 @@ class WithBallDecisionMaker(IDecisionMaker):
         candidate_actions += self.dribble_generator.generator(agent)
 
         if len(candidate_actions) == 0:
-            agent.add_action(pb2.PlayerAction(body_hold_ball=pb2.Body_HoldBall()))
-            agent.add_action(pb2.PlayerAction(neck_scan_field=pb2.Neck_ScanField()))
+            agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
+            agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
             return
 
         if agent.debug_mode:
-            agent.add_log_text(pb2.LoggerLevel.PASS, f"candidate_actions: {candidate_actions}")
+            agent.add_log_text(LoggerLevel.PASS, f"candidate_actions: {candidate_actions}")
         candidate_actions.sort(key=lambda x: x.score, reverse=True)
 
         best_action = None
@@ -48,13 +48,13 @@ class WithBallDecisionMaker(IDecisionMaker):
         WithBallDecisionMaker.count += 1
         print(f"{agent.wm.cycle} {i} {len(candidate_actions)} {float(i) / len(candidate_actions)} {candidate.score} {end_time - start_time} {WithBallDecisionMaker.sum_time / WithBallDecisionMaker.count}")
         if best_action is None:
-            agent.add_action(pb2.PlayerAction(body_hold_ball=pb2.Body_HoldBall()))
-            agent.add_action(pb2.PlayerAction(neck_scan_field=pb2.Neck_ScanField()))
+            agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
+            agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
             return
         
-        agent.add_action(pb2.PlayerAction(body_smart_kick=pb2.Body_SmartKick(
-            target_point=pb2.Vector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
+        agent.add_action(PlayerAction(body_smart_kick=Body_SmartKick(
+            target_point=ThriftVector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
             first_speed=best_action.firstVelocity.r(),
             first_speed_threshold=0.0,
             max_steps=3)))
-        agent.add_action(pb2.PlayerAction(neck_scan_field=pb2.Neck_ScanField()))
+        agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))

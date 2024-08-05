@@ -1,21 +1,26 @@
 from abc import ABC
 from src.IAgent import IAgent
-import service_pb2 as pb2
-
+from soccer.ttypes import CoachActions, CoachAction, ChangePlayerType, DoHeliosSubstitute, PlayerParam, PlayerType, ServerParam, WorldModel
 
 class SampleCoachAgent(IAgent, ABC):
     def __init__(self):
         super().__init__()
-        self.serverParams: pb2.ServerParam = None
-        self.playerParams: pb2.PlayerParam = None
-        self.playerTypes: dict[pb2.PlayerType] = {}
-        self.wm: pb2.WorldModel = None
+        self.serverParams: ServerParam = None
+        self.playerParams: PlayerParam = None
+        self.playerTypes: dict[PlayerType] = {}
+        self.wm: WorldModel = None
         self.first_substitution = True
     
-    def get_actions(self, wm:pb2.WorldModel) -> pb2.CoachActions:
+    def get_actions(self, wm:WorldModel) -> list[CoachAction]:
+        print("SampleCoachAgent.get_actions", wm.cycle)
         self.wm = wm
-        
-        actions = pb2.CoachActions()
+        actions = []
+        actions.append(
+            CoachAction(
+                do_helios_substitute=DoHeliosSubstitute()
+            )
+        )
+        return actions
         # if (wm.cycle == 0
         #     and self.first_substitution
         #     and self.playerParams is not None
@@ -24,27 +29,24 @@ class SampleCoachAgent(IAgent, ABC):
         #     self.first_substitution = False
         #     for i in range(11):
         #         actions.actions.append(
-        #             pb2.CoachAction(
-        #                 change_player_types=pb2.ChangePlayerType(
+        #             CoachAction(
+        #                 change_player_types=ChangePlayerType(
         #                 uniform_number=i+1,
         #                 type=i
         #                 )
         #             )
         #         )
 
-        actions.actions.append(
-            pb2.CoachAction(
-                do_helios_substitute=pb2.DoHeliosSubstitute()
-            )
-        )
-        return actions
+
+        # coach_actions.actions = actions
+
     
     def set_params(self, params):
-        if isinstance(params, pb2.ServerParam):
+        if isinstance(params, ServerParam):
             self.serverParams = params
-        elif isinstance(params, pb2.PlayerParam):
+        elif isinstance(params, PlayerParam):
             self.playerParams = params
-        elif isinstance(params, pb2.PlayerType):
+        elif isinstance(params, PlayerType):
             self.playerTypes[params.id] = params
         else:
             raise Exception("Unknown params type")

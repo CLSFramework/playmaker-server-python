@@ -1,27 +1,28 @@
 from typing import Union
 from abc import ABC, abstractmethod
-import service_pb2 as pb2
 from src.IPositionStrategy import IPositionStrategy
 from typing import Union
+from soccer.ttypes import PlayerAction, PlayerActions, CoachAction, TrainerAction, ServerParam, PlayerParam, PlayerType, Log, AddText, AddMessage, AddCircle, ThriftVector2D, LoggerLevel
+from soccer.ttypes import WorldModel
 
 
 class IAgent(ABC):
     def __init__(self) -> None:
         super().__init__()
-        self.wm: Union[pb2.WorldModel, None] = None
-        self.actions: list[pb2.PlayerAction] = []
-        self.serverParams: Union[pb2.ServerParam, None] = None
-        self.playerParams: Union[pb2.PlayerParam, None] = None
-        self.playerTypes: Union[pb2.PlayerType, dict[pb2.PlayerType]] = {}
+        self.wm: Union[WorldModel, None] = None
+        self.actions: list[PlayerAction] = []
+        self.serverParams: Union[ServerParam, None] = None
+        self.playerParams: Union[PlayerParam, None] = None
+        self.playerTypes: Union[PlayerType, dict[PlayerType]] = {}
         self.debug_mode: bool = False
 
-    def get_type(self, id: int) -> pb2.PlayerType:
+    def get_type(self, id: int) -> PlayerType:
         if id < 0:
             id = 0
         return self.playerTypes[id]
     
     @abstractmethod
-    def get_actions(self, wm: pb2.WorldModel) -> pb2.PlayerActions:
+    def get_actions(self, wm: WorldModel) -> PlayerActions:
         pass
 
     # @abstractmethod
@@ -44,41 +45,41 @@ class IAgent(ABC):
     #   }
     # }
 
-    def add_log_text(self, level: pb2.LoggerLevel, message: str):
+    def add_log_text(self, level: LoggerLevel, message: str):
         if not self.debug_mode:
             return
-        self.add_action(pb2.PlayerAction(
-            log=pb2.Log(
-                add_text=pb2.AddText(
+        self.add_action(PlayerAction(
+            log=Log(
+                add_text=AddText(
                     level=level,
                     message=message
                 )
             )
         ))
 
-    def add_log_message(self, level: pb2.LoggerLevel, message: str, x, y, color):
+    def add_log_message(self, level: LoggerLevel, message: str, x, y, color):
         if not self.debug_mode:
             return
-        self.add_action(pb2.PlayerAction(
-            log=pb2.Log(
-                add_message=pb2.AddMessage(
+        self.add_action(PlayerAction(
+            log=Log(
+                add_message=AddMessage(
                     level=level,
                     message=message,
-                    position=pb2.Vector2D(x=x, y=y),
+                    position=ThriftVector2D(x=x, y=y),
                     color=color,
                 )
             )
         ))
 
-    def add_log_circle(self, level: pb2.LoggerLevel, center_x: float, center_y: float, radius: float, color: str,
+    def add_log_circle(self, level: LoggerLevel, center_x: float, center_y: float, radius: float, color: str,
                        fill: bool):
         if not self.debug_mode:
             return
-        self.add_action(pb2.PlayerAction(
-            log=pb2.Log(
-                add_circle=pb2.AddCircle(
+        self.add_action(PlayerAction(
+            log=Log(
+                add_circle=AddCircle(
                     level=level,
-                    center=pb2.Vector2D(x=center_x, y=center_y),
+                    center=ThriftVector2D(x=center_x, y=center_y),
                     radius=radius,
                     color=color,
                     fill=fill
@@ -86,5 +87,5 @@ class IAgent(ABC):
             )
         ))
 
-    def add_action(self, actions: Union[pb2.PlayerAction, pb2.CoachAction, pb2.TrainerAction]):
+    def add_action(self, actions: Union[PlayerAction, CoachAction, TrainerAction]):
         self.actions.append(actions)

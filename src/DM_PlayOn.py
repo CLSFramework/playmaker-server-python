@@ -1,4 +1,3 @@
-import service_pb2 as pb2
 from src.IDecisionMaker import IDecisionMaker
 from src.IAgent import IAgent
 from src.DM_WithBall import WithBallDecisionMaker
@@ -12,7 +11,9 @@ class PlayOnDecisionMaker(IDecisionMaker):
         pass
     
     def make_decision(self, agent: IAgent):
-        if agent.wm.self.is_kickable:
+        if agent.wm.myself.is_kickable:
+            print("PlayOnDecisionMaker: is_kickable")
             self.withBallDecisionMaker.make_decision(agent)
         else:
+            print("PlayOnDecisionMaker: not is_kickable")
             self.noBallDecisionMaker.make_decision(agent)

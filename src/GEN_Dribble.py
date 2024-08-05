@@ -5,7 +5,7 @@ from src.IBallAction import ActionType, DribbleAction
 
 from src.IBallActionGenerator import BallActionGenerator
 from src.Tools import Tools
-from service_pb2 import WorldModel
+from soccer.ttypes import WorldModel
 
 debug_dribble = False
 max_dribble_time = 0
@@ -40,19 +40,19 @@ class GeneratorDribble(BallActionGenerator):
         angle_step = 360.0 / angle_div
 
         sp = agent.serverParams
-        ptype = agent.get_type(wm.self.type_id)
+        ptype = agent.get_type(wm.myself.type_id)
 
-        my_first_speed = Tools.vector2d_message_to_vector2d(wm.self.velocity).r()
+        my_first_speed = Tools.vector2d_message_to_vector2d(wm.myself.velocity).r()
 
         for a in range(angle_div):
-            dash_angle = AngleDeg(wm.self.body_direction + (angle_step * a))
+            dash_angle = AngleDeg(wm.myself.body_direction + (angle_step * a))
 
-            if wm.self.position.x < 16.0 and dash_angle.abs() > 100.0:
+            if wm.myself.position.x < 16.0 and dash_angle.abs() > 100.0:
                 # if debug_dribble:
                 #     log.sw_log().dribble().add_text( '#dash angle:{} cancel is not safe1'.format(dash_angle))
                 continue
 
-            if wm.self.position.x < -36.0 and abs(wm.self.position.y) < 20.0 and dash_angle.abs() > 45.0:
+            if wm.myself.position.x < -36.0 and abs(wm.myself.position.y) < 20.0 and dash_angle.abs() > 45.0:
                 # if debug_dribble:
                 #     log.sw_log().dribble().add_text( '#dash angle:{} cancel is not safe2'.format(dash_angle))
                 continue
@@ -92,7 +92,7 @@ class GeneratorDribble(BallActionGenerator):
         # if debug_dribble:
         #     log.sw_log().dribble().add_text( '##self_cache:{}'.format(self_cache))
         sp = agent.serverParams
-        ptype = agent.get_type(wm.self.type_id)
+        ptype = agent.get_type(wm.myself.type_id)
 
         # trap_rel = Vector2D.polar2vector(ptype.playerSize() + ptype.kickableMargin() * 0.2 + SP.ball_size(), dash_angle)
         trap_rel = Vector2D.polar2vector(ptype.player_size + ptype.kickable_margin * 0.2 + 0, dash_angle)
@@ -117,7 +117,7 @@ class GeneratorDribble(BallActionGenerator):
             term = (1.0 - pow(sp.ball_decay, 1 + n_turn + n_dash ) ) / (1.0 - sp.ball_decay)
             first_vel: Vector2D = (ball_trap_pos - ball_pos) / term
             kick_accel: Vector2D = first_vel - ball_vel
-            kick_power = kick_accel.r() / wm.self.kick_rate
+            kick_power = kick_accel.r() / wm.myself.kick_rate
 
             if kick_power > sp.max_power or kick_accel.r2() > pow(sp.ball_accel_max, 2) or first_vel.r2() > pow(
                     sp.ball_speed_max, 2):
@@ -140,7 +140,7 @@ class GeneratorDribble(BallActionGenerator):
             candidate.actionType = ActionType.DRIBBLE
             candidate.initBallPos = Tools.vector2d_message_to_vector2d(wm.ball.position)
             candidate.targetBallPos = ball_trap_pos
-            candidate.targetUnum = wm.self.uniform_number
+            candidate.targetUnum = wm.myself.uniform_number
             candidate.firstVelocity = first_vel
             candidate.index = self.index
             candidate.dribble_steps = n_turn + n_dash + 1
@@ -163,14 +163,14 @@ class GeneratorDribble(BallActionGenerator):
     def create_self_cache(self, agent: IAgent, dash_angle, n_turn, n_dash, self_cache):
         wm = agent.wm
         sp = agent.serverParams
-        ptype = agent.get_type(wm.self.type_id)
+        ptype = agent.get_type(wm.myself.type_id)
 
         self_cache.clear()
 
-        # stamina_model = wm.self().stamina_model()
+        # stamina_model = wm.myself().stamina_model()
 
-        my_pos = Tools.vector2d_message_to_vector2d(wm.self.position)
-        my_vel = Tools.vector2d_message_to_vector2d(wm.self.velocity)
+        my_pos = Tools.vector2d_message_to_vector2d(wm.myself.position)
+        my_vel = Tools.vector2d_message_to_vector2d(wm.myself.velocity)
 
         my_pos += my_vel
         my_vel *= ptype.player_decay
