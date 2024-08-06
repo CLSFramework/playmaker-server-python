@@ -43,33 +43,36 @@ class GameHandler:
         self.player_agent.set_params(serverParam)
         self.coach_agent.set_params(serverParam)
         self.trainer_agent.set_params(serverParam)
-        return
+        res = Empty()
+        return res
 
     def SendPlayerParams(self, playerParam):
         print("Player params received", playerParam)
         self.player_agent.set_params(playerParam)
         self.coach_agent.set_params(playerParam)
         self.trainer_agent.set_params(playerParam)
-        return
+        res = Empty()
+        return res
 
     def SendPlayerType(self, playerType):
         print("Player type received", playerType)
         self.player_agent.set_params(playerType)
         self.coach_agent.set_params(playerType)
         self.trainer_agent.set_params(playerType)
-        return
+        res = Empty()
+        return res
 
     def SendInitMessage(self, initMessage):
         print("Init message received", initMessage)
         self.player_agent.set_debug_mode(initMessage.debug_mode)
-        return
+        res = Empty()
+        return res
 
     def GetInitMessage(self, empty):
         print("New connection")
         # with self.lock:
         #     self.number_of_connections += 1
         res = InitMessageFromServer()
-        print(res)
         return res
 
     def SendByeCommand(self, empty):
@@ -77,7 +80,8 @@ class GameHandler:
             self.number_of_connections -= 1
         if self.number_of_connections <= 0:
             self.running.release()
-        return
+        res = Empty()
+        return res
 
 
 def serve():
@@ -88,6 +92,8 @@ def serve():
     pfactory = TBinaryProtocol.TBinaryProtocolFactory()
 
     server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
+    # server = TServer.TThreadPoolServer(processor, transport, tfactory, pfactory)
+    # server.setNumThreads(50)
     print("Thrift server started at port 50051")
     try:
         handler.running.acquire()

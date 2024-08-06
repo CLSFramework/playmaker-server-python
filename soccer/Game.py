@@ -202,7 +202,7 @@ class Client(Iface):
 
         """
         self.send_SendInitMessage(init_message)
-        self.recv_SendInitMessage()
+        return self.recv_SendInitMessage()
 
     def send_SendInitMessage(self, init_message):
         self._oprot.writeMessageBegin('SendInitMessage', TMessageType.CALL, self._seqid)
@@ -223,7 +223,9 @@ class Client(Iface):
         result = SendInitMessage_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "SendInitMessage failed: unknown result")
 
     def SendServerParams(self, server_param):
         """
@@ -232,7 +234,7 @@ class Client(Iface):
 
         """
         self.send_SendServerParams(server_param)
-        self.recv_SendServerParams()
+        return self.recv_SendServerParams()
 
     def send_SendServerParams(self, server_param):
         self._oprot.writeMessageBegin('SendServerParams', TMessageType.CALL, self._seqid)
@@ -253,7 +255,9 @@ class Client(Iface):
         result = SendServerParams_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "SendServerParams failed: unknown result")
 
     def SendPlayerParams(self, player_param):
         """
@@ -262,7 +266,7 @@ class Client(Iface):
 
         """
         self.send_SendPlayerParams(player_param)
-        self.recv_SendPlayerParams()
+        return self.recv_SendPlayerParams()
 
     def send_SendPlayerParams(self, player_param):
         self._oprot.writeMessageBegin('SendPlayerParams', TMessageType.CALL, self._seqid)
@@ -283,7 +287,9 @@ class Client(Iface):
         result = SendPlayerParams_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "SendPlayerParams failed: unknown result")
 
     def SendPlayerType(self, player_type):
         """
@@ -292,7 +298,7 @@ class Client(Iface):
 
         """
         self.send_SendPlayerType(player_type)
-        self.recv_SendPlayerType()
+        return self.recv_SendPlayerType()
 
     def send_SendPlayerType(self, player_type):
         self._oprot.writeMessageBegin('SendPlayerType', TMessageType.CALL, self._seqid)
@@ -313,7 +319,9 @@ class Client(Iface):
         result = SendPlayerType_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "SendPlayerType failed: unknown result")
 
     def GetInitMessage(self, empty):
         """
@@ -354,7 +362,7 @@ class Client(Iface):
 
         """
         self.send_SendByeCommand(empty)
-        self.recv_SendByeCommand()
+        return self.recv_SendByeCommand()
 
     def send_SendByeCommand(self, empty):
         self._oprot.writeMessageBegin('SendByeCommand', TMessageType.CALL, self._seqid)
@@ -375,7 +383,9 @@ class Client(Iface):
         result = SendByeCommand_result()
         result.read(iprot)
         iprot.readMessageEnd()
-        return
+        if result.success is not None:
+            return result.success
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "SendByeCommand failed: unknown result")
 
 
 class Processor(Iface, TProcessor):
@@ -488,7 +498,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendInitMessage_result()
         try:
-            self._handler.SendInitMessage(args.init_message)
+            result.success = self._handler.SendInitMessage(args.init_message)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -511,7 +521,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendServerParams_result()
         try:
-            self._handler.SendServerParams(args.server_param)
+            result.success = self._handler.SendServerParams(args.server_param)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -534,7 +544,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendPlayerParams_result()
         try:
-            self._handler.SendPlayerParams(args.player_param)
+            result.success = self._handler.SendPlayerParams(args.player_param)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -557,7 +567,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendPlayerType_result()
         try:
-            self._handler.SendPlayerType(args.player_type)
+            result.success = self._handler.SendPlayerType(args.player_type)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -603,7 +613,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendByeCommand_result()
         try:
-            self._handler.SendByeCommand(args.empty)
+            result.success = self._handler.SendByeCommand(args.empty)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -1062,7 +1072,15 @@ SendInitMessage_args.thrift_spec = (
 
 
 class SendInitMessage_result(object):
+    """
+    Attributes:
+     - success
 
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1073,6 +1091,12 @@ class SendInitMessage_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = Empty()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1083,6 +1107,10 @@ class SendInitMessage_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendInitMessage_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1101,6 +1129,7 @@ class SendInitMessage_result(object):
         return not (self == other)
 all_structs.append(SendInitMessage_result)
 SendInitMessage_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [Empty, None], None, ),  # 0
 )
 
 
@@ -1168,7 +1197,15 @@ SendServerParams_args.thrift_spec = (
 
 
 class SendServerParams_result(object):
+    """
+    Attributes:
+     - success
 
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1179,6 +1216,12 @@ class SendServerParams_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = Empty()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1189,6 +1232,10 @@ class SendServerParams_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendServerParams_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1207,6 +1254,7 @@ class SendServerParams_result(object):
         return not (self == other)
 all_structs.append(SendServerParams_result)
 SendServerParams_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [Empty, None], None, ),  # 0
 )
 
 
@@ -1274,7 +1322,15 @@ SendPlayerParams_args.thrift_spec = (
 
 
 class SendPlayerParams_result(object):
+    """
+    Attributes:
+     - success
 
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1285,6 +1341,12 @@ class SendPlayerParams_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = Empty()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1295,6 +1357,10 @@ class SendPlayerParams_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendPlayerParams_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1313,6 +1379,7 @@ class SendPlayerParams_result(object):
         return not (self == other)
 all_structs.append(SendPlayerParams_result)
 SendPlayerParams_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [Empty, None], None, ),  # 0
 )
 
 
@@ -1380,7 +1447,15 @@ SendPlayerType_args.thrift_spec = (
 
 
 class SendPlayerType_result(object):
+    """
+    Attributes:
+     - success
 
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1391,6 +1466,12 @@ class SendPlayerType_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = Empty()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1401,6 +1482,10 @@ class SendPlayerType_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendPlayerType_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1419,6 +1504,7 @@ class SendPlayerType_result(object):
         return not (self == other)
 all_structs.append(SendPlayerType_result)
 SendPlayerType_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [Empty, None], None, ),  # 0
 )
 
 
@@ -1611,7 +1697,15 @@ SendByeCommand_args.thrift_spec = (
 
 
 class SendByeCommand_result(object):
+    """
+    Attributes:
+     - success
 
+    """
+
+
+    def __init__(self, success=None,):
+        self.success = success
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1622,6 +1716,12 @@ class SendByeCommand_result(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 0:
+                if ftype == TType.STRUCT:
+                    self.success = Empty()
+                    self.success.read(iprot)
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -1632,6 +1732,10 @@ class SendByeCommand_result(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendByeCommand_result')
+        if self.success is not None:
+            oprot.writeFieldBegin('success', TType.STRUCT, 0)
+            self.success.write(oprot)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -1650,6 +1754,7 @@ class SendByeCommand_result(object):
         return not (self == other)
 all_structs.append(SendByeCommand_result)
 SendByeCommand_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [Empty, None], None, ),  # 0
 )
 fix_spec(all_structs)
 del all_structs
