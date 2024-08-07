@@ -1,5 +1,5 @@
 from abc import ABC
-from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions, ServerParam, PlayerParam, PlayerType, InitMessage, InitMessageFromServer, WorldModel, PlayerAction
+from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions, ServerParam, PlayerParam, PlayerType, InitMessage, WorldModel, PlayerAction
 from src.DecisionMaker import DecisionMaker
 from src.IAgent import IAgent
 from src.FormationStrategy import FormationStrategy

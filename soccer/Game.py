@@ -19,74 +19,81 @@ all_structs = []
 
 
 class Iface(object):
-    def GetPlayerActions(self, state):
+    def GetPlayerActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
         pass
 
-    def GetCoachActions(self, state):
+    def GetCoachActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
         pass
 
-    def GetTrainerActions(self, state):
+    def GetTrainerActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
         pass
 
-    def SendInitMessage(self, init_message):
+    def SendInitMessage(self, register_response, init_message):
         """
         Parameters:
+         - register_response
          - init_message
 
         """
         pass
 
-    def SendServerParams(self, server_param):
+    def SendServerParams(self, register_response, server_param):
         """
         Parameters:
+         - register_response
          - server_param
 
         """
         pass
 
-    def SendPlayerParams(self, player_param):
+    def SendPlayerParams(self, register_response, player_param):
         """
         Parameters:
+         - register_response
          - player_param
 
         """
         pass
 
-    def SendPlayerType(self, player_type):
+    def SendPlayerType(self, register_response, player_type):
         """
         Parameters:
+         - register_response
          - player_type
 
         """
         pass
 
-    def GetInitMessage(self, empty):
+    def Register(self, request):
         """
         Parameters:
-         - empty
+         - request
 
         """
         pass
 
-    def SendByeCommand(self, empty):
+    def SendByeCommand(self, register_response):
         """
         Parameters:
-         - empty
+         - register_response
 
         """
         pass
@@ -99,18 +106,20 @@ class Client(Iface):
             self._oprot = oprot
         self._seqid = 0
 
-    def GetPlayerActions(self, state):
+    def GetPlayerActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
-        self.send_GetPlayerActions(state)
+        self.send_GetPlayerActions(register_response, state)
         return self.recv_GetPlayerActions()
 
-    def send_GetPlayerActions(self, state):
+    def send_GetPlayerActions(self, register_response, state):
         self._oprot.writeMessageBegin('GetPlayerActions', TMessageType.CALL, self._seqid)
         args = GetPlayerActions_args()
+        args.register_response = register_response
         args.state = state
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -131,18 +140,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "GetPlayerActions failed: unknown result")
 
-    def GetCoachActions(self, state):
+    def GetCoachActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
-        self.send_GetCoachActions(state)
+        self.send_GetCoachActions(register_response, state)
         return self.recv_GetCoachActions()
 
-    def send_GetCoachActions(self, state):
+    def send_GetCoachActions(self, register_response, state):
         self._oprot.writeMessageBegin('GetCoachActions', TMessageType.CALL, self._seqid)
         args = GetCoachActions_args()
+        args.register_response = register_response
         args.state = state
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -163,18 +174,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "GetCoachActions failed: unknown result")
 
-    def GetTrainerActions(self, state):
+    def GetTrainerActions(self, register_response, state):
         """
         Parameters:
+         - register_response
          - state
 
         """
-        self.send_GetTrainerActions(state)
+        self.send_GetTrainerActions(register_response, state)
         return self.recv_GetTrainerActions()
 
-    def send_GetTrainerActions(self, state):
+    def send_GetTrainerActions(self, register_response, state):
         self._oprot.writeMessageBegin('GetTrainerActions', TMessageType.CALL, self._seqid)
         args = GetTrainerActions_args()
+        args.register_response = register_response
         args.state = state
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -195,18 +208,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "GetTrainerActions failed: unknown result")
 
-    def SendInitMessage(self, init_message):
+    def SendInitMessage(self, register_response, init_message):
         """
         Parameters:
+         - register_response
          - init_message
 
         """
-        self.send_SendInitMessage(init_message)
+        self.send_SendInitMessage(register_response, init_message)
         return self.recv_SendInitMessage()
 
-    def send_SendInitMessage(self, init_message):
+    def send_SendInitMessage(self, register_response, init_message):
         self._oprot.writeMessageBegin('SendInitMessage', TMessageType.CALL, self._seqid)
         args = SendInitMessage_args()
+        args.register_response = register_response
         args.init_message = init_message
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -227,18 +242,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "SendInitMessage failed: unknown result")
 
-    def SendServerParams(self, server_param):
+    def SendServerParams(self, register_response, server_param):
         """
         Parameters:
+         - register_response
          - server_param
 
         """
-        self.send_SendServerParams(server_param)
+        self.send_SendServerParams(register_response, server_param)
         return self.recv_SendServerParams()
 
-    def send_SendServerParams(self, server_param):
+    def send_SendServerParams(self, register_response, server_param):
         self._oprot.writeMessageBegin('SendServerParams', TMessageType.CALL, self._seqid)
         args = SendServerParams_args()
+        args.register_response = register_response
         args.server_param = server_param
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -259,18 +276,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "SendServerParams failed: unknown result")
 
-    def SendPlayerParams(self, player_param):
+    def SendPlayerParams(self, register_response, player_param):
         """
         Parameters:
+         - register_response
          - player_param
 
         """
-        self.send_SendPlayerParams(player_param)
+        self.send_SendPlayerParams(register_response, player_param)
         return self.recv_SendPlayerParams()
 
-    def send_SendPlayerParams(self, player_param):
+    def send_SendPlayerParams(self, register_response, player_param):
         self._oprot.writeMessageBegin('SendPlayerParams', TMessageType.CALL, self._seqid)
         args = SendPlayerParams_args()
+        args.register_response = register_response
         args.player_param = player_param
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -291,18 +310,20 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "SendPlayerParams failed: unknown result")
 
-    def SendPlayerType(self, player_type):
+    def SendPlayerType(self, register_response, player_type):
         """
         Parameters:
+         - register_response
          - player_type
 
         """
-        self.send_SendPlayerType(player_type)
+        self.send_SendPlayerType(register_response, player_type)
         return self.recv_SendPlayerType()
 
-    def send_SendPlayerType(self, player_type):
+    def send_SendPlayerType(self, register_response, player_type):
         self._oprot.writeMessageBegin('SendPlayerType', TMessageType.CALL, self._seqid)
         args = SendPlayerType_args()
+        args.register_response = register_response
         args.player_type = player_type
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
@@ -323,24 +344,24 @@ class Client(Iface):
             return result.success
         raise TApplicationException(TApplicationException.MISSING_RESULT, "SendPlayerType failed: unknown result")
 
-    def GetInitMessage(self, empty):
+    def Register(self, request):
         """
         Parameters:
-         - empty
+         - request
 
         """
-        self.send_GetInitMessage(empty)
-        return self.recv_GetInitMessage()
+        self.send_Register(request)
+        return self.recv_Register()
 
-    def send_GetInitMessage(self, empty):
-        self._oprot.writeMessageBegin('GetInitMessage', TMessageType.CALL, self._seqid)
-        args = GetInitMessage_args()
-        args.empty = empty
+    def send_Register(self, request):
+        self._oprot.writeMessageBegin('Register', TMessageType.CALL, self._seqid)
+        args = Register_args()
+        args.request = request
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
         self._oprot.trans.flush()
 
-    def recv_GetInitMessage(self):
+    def recv_Register(self):
         iprot = self._iprot
         (fname, mtype, rseqid) = iprot.readMessageBegin()
         if mtype == TMessageType.EXCEPTION:
@@ -348,26 +369,26 @@ class Client(Iface):
             x.read(iprot)
             iprot.readMessageEnd()
             raise x
-        result = GetInitMessage_result()
+        result = Register_result()
         result.read(iprot)
         iprot.readMessageEnd()
         if result.success is not None:
             return result.success
-        raise TApplicationException(TApplicationException.MISSING_RESULT, "GetInitMessage failed: unknown result")
+        raise TApplicationException(TApplicationException.MISSING_RESULT, "Register failed: unknown result")
 
-    def SendByeCommand(self, empty):
+    def SendByeCommand(self, register_response):
         """
         Parameters:
-         - empty
+         - register_response
 
         """
-        self.send_SendByeCommand(empty)
+        self.send_SendByeCommand(register_response)
         return self.recv_SendByeCommand()
 
-    def send_SendByeCommand(self, empty):
+    def send_SendByeCommand(self, register_response):
         self._oprot.writeMessageBegin('SendByeCommand', TMessageType.CALL, self._seqid)
         args = SendByeCommand_args()
-        args.empty = empty
+        args.register_response = register_response
         args.write(self._oprot)
         self._oprot.writeMessageEnd()
         self._oprot.trans.flush()
@@ -399,7 +420,7 @@ class Processor(Iface, TProcessor):
         self._processMap["SendServerParams"] = Processor.process_SendServerParams
         self._processMap["SendPlayerParams"] = Processor.process_SendPlayerParams
         self._processMap["SendPlayerType"] = Processor.process_SendPlayerType
-        self._processMap["GetInitMessage"] = Processor.process_GetInitMessage
+        self._processMap["Register"] = Processor.process_Register
         self._processMap["SendByeCommand"] = Processor.process_SendByeCommand
         self._on_message_begin = None
 
@@ -429,7 +450,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = GetPlayerActions_result()
         try:
-            result.success = self._handler.GetPlayerActions(args.state)
+            result.success = self._handler.GetPlayerActions(args.register_response, args.state)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -452,7 +473,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = GetCoachActions_result()
         try:
-            result.success = self._handler.GetCoachActions(args.state)
+            result.success = self._handler.GetCoachActions(args.register_response, args.state)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -475,7 +496,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = GetTrainerActions_result()
         try:
-            result.success = self._handler.GetTrainerActions(args.state)
+            result.success = self._handler.GetTrainerActions(args.register_response, args.state)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -498,7 +519,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendInitMessage_result()
         try:
-            result.success = self._handler.SendInitMessage(args.init_message)
+            result.success = self._handler.SendInitMessage(args.register_response, args.init_message)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -521,7 +542,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendServerParams_result()
         try:
-            result.success = self._handler.SendServerParams(args.server_param)
+            result.success = self._handler.SendServerParams(args.register_response, args.server_param)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -544,7 +565,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendPlayerParams_result()
         try:
-            result.success = self._handler.SendPlayerParams(args.player_param)
+            result.success = self._handler.SendPlayerParams(args.register_response, args.player_param)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -567,7 +588,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendPlayerType_result()
         try:
-            result.success = self._handler.SendPlayerType(args.player_type)
+            result.success = self._handler.SendPlayerType(args.register_response, args.player_type)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -584,13 +605,13 @@ class Processor(Iface, TProcessor):
         oprot.writeMessageEnd()
         oprot.trans.flush()
 
-    def process_GetInitMessage(self, seqid, iprot, oprot):
-        args = GetInitMessage_args()
+    def process_Register(self, seqid, iprot, oprot):
+        args = Register_args()
         args.read(iprot)
         iprot.readMessageEnd()
-        result = GetInitMessage_result()
+        result = Register_result()
         try:
-            result.success = self._handler.GetInitMessage(args.empty)
+            result.success = self._handler.Register(args.request)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -602,7 +623,7 @@ class Processor(Iface, TProcessor):
             logging.exception('Unexpected exception in handler')
             msg_type = TMessageType.EXCEPTION
             result = TApplicationException(TApplicationException.INTERNAL_ERROR, 'Internal error')
-        oprot.writeMessageBegin("GetInitMessage", msg_type, seqid)
+        oprot.writeMessageBegin("Register", msg_type, seqid)
         result.write(oprot)
         oprot.writeMessageEnd()
         oprot.trans.flush()
@@ -613,7 +634,7 @@ class Processor(Iface, TProcessor):
         iprot.readMessageEnd()
         result = SendByeCommand_result()
         try:
-            result.success = self._handler.SendByeCommand(args.empty)
+            result.success = self._handler.SendByeCommand(args.register_response)
             msg_type = TMessageType.REPLY
         except TTransport.TTransportException:
             raise
@@ -636,12 +657,14 @@ class Processor(Iface, TProcessor):
 class GetPlayerActions_args(object):
     """
     Attributes:
+     - register_response
      - state
 
     """
 
 
-    def __init__(self, state=None,):
+    def __init__(self, register_response=None, state=None,):
+        self.register_response = register_response
         self.state = state
 
     def read(self, iprot):
@@ -654,6 +677,12 @@ class GetPlayerActions_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.state = State()
                     self.state.read(iprot)
@@ -669,8 +698,12 @@ class GetPlayerActions_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('GetPlayerActions_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.state is not None:
-            oprot.writeFieldBegin('state', TType.STRUCT, 1)
+            oprot.writeFieldBegin('state', TType.STRUCT, 2)
             self.state.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -692,7 +725,8 @@ class GetPlayerActions_args(object):
 all_structs.append(GetPlayerActions_args)
 GetPlayerActions_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'state', [State, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'state', [State, None], None, ),  # 2
 )
 
 
@@ -761,12 +795,14 @@ GetPlayerActions_result.thrift_spec = (
 class GetCoachActions_args(object):
     """
     Attributes:
+     - register_response
      - state
 
     """
 
 
-    def __init__(self, state=None,):
+    def __init__(self, register_response=None, state=None,):
+        self.register_response = register_response
         self.state = state
 
     def read(self, iprot):
@@ -779,6 +815,12 @@ class GetCoachActions_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.state = State()
                     self.state.read(iprot)
@@ -794,8 +836,12 @@ class GetCoachActions_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('GetCoachActions_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.state is not None:
-            oprot.writeFieldBegin('state', TType.STRUCT, 1)
+            oprot.writeFieldBegin('state', TType.STRUCT, 2)
             self.state.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -817,7 +863,8 @@ class GetCoachActions_args(object):
 all_structs.append(GetCoachActions_args)
 GetCoachActions_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'state', [State, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'state', [State, None], None, ),  # 2
 )
 
 
@@ -886,12 +933,14 @@ GetCoachActions_result.thrift_spec = (
 class GetTrainerActions_args(object):
     """
     Attributes:
+     - register_response
      - state
 
     """
 
 
-    def __init__(self, state=None,):
+    def __init__(self, register_response=None, state=None,):
+        self.register_response = register_response
         self.state = state
 
     def read(self, iprot):
@@ -904,6 +953,12 @@ class GetTrainerActions_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.state = State()
                     self.state.read(iprot)
@@ -919,8 +974,12 @@ class GetTrainerActions_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('GetTrainerActions_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.state is not None:
-            oprot.writeFieldBegin('state', TType.STRUCT, 1)
+            oprot.writeFieldBegin('state', TType.STRUCT, 2)
             self.state.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -942,7 +1001,8 @@ class GetTrainerActions_args(object):
 all_structs.append(GetTrainerActions_args)
 GetTrainerActions_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'state', [State, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'state', [State, None], None, ),  # 2
 )
 
 
@@ -1011,12 +1071,14 @@ GetTrainerActions_result.thrift_spec = (
 class SendInitMessage_args(object):
     """
     Attributes:
+     - register_response
      - init_message
 
     """
 
 
-    def __init__(self, init_message=None,):
+    def __init__(self, register_response=None, init_message=None,):
+        self.register_response = register_response
         self.init_message = init_message
 
     def read(self, iprot):
@@ -1029,6 +1091,12 @@ class SendInitMessage_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.init_message = InitMessage()
                     self.init_message.read(iprot)
@@ -1044,8 +1112,12 @@ class SendInitMessage_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendInitMessage_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.init_message is not None:
-            oprot.writeFieldBegin('init_message', TType.STRUCT, 1)
+            oprot.writeFieldBegin('init_message', TType.STRUCT, 2)
             self.init_message.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1067,7 +1139,8 @@ class SendInitMessage_args(object):
 all_structs.append(SendInitMessage_args)
 SendInitMessage_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'init_message', [InitMessage, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'init_message', [InitMessage, None], None, ),  # 2
 )
 
 
@@ -1136,12 +1209,14 @@ SendInitMessage_result.thrift_spec = (
 class SendServerParams_args(object):
     """
     Attributes:
+     - register_response
      - server_param
 
     """
 
 
-    def __init__(self, server_param=None,):
+    def __init__(self, register_response=None, server_param=None,):
+        self.register_response = register_response
         self.server_param = server_param
 
     def read(self, iprot):
@@ -1154,6 +1229,12 @@ class SendServerParams_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.server_param = ServerParam()
                     self.server_param.read(iprot)
@@ -1169,8 +1250,12 @@ class SendServerParams_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendServerParams_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.server_param is not None:
-            oprot.writeFieldBegin('server_param', TType.STRUCT, 1)
+            oprot.writeFieldBegin('server_param', TType.STRUCT, 2)
             self.server_param.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1192,7 +1277,8 @@ class SendServerParams_args(object):
 all_structs.append(SendServerParams_args)
 SendServerParams_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'server_param', [ServerParam, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'server_param', [ServerParam, None], None, ),  # 2
 )
 
 
@@ -1261,12 +1347,14 @@ SendServerParams_result.thrift_spec = (
 class SendPlayerParams_args(object):
     """
     Attributes:
+     - register_response
      - player_param
 
     """
 
 
-    def __init__(self, player_param=None,):
+    def __init__(self, register_response=None, player_param=None,):
+        self.register_response = register_response
         self.player_param = player_param
 
     def read(self, iprot):
@@ -1279,6 +1367,12 @@ class SendPlayerParams_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.player_param = PlayerParam()
                     self.player_param.read(iprot)
@@ -1294,8 +1388,12 @@ class SendPlayerParams_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendPlayerParams_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.player_param is not None:
-            oprot.writeFieldBegin('player_param', TType.STRUCT, 1)
+            oprot.writeFieldBegin('player_param', TType.STRUCT, 2)
             self.player_param.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1317,7 +1415,8 @@ class SendPlayerParams_args(object):
 all_structs.append(SendPlayerParams_args)
 SendPlayerParams_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'player_param', [PlayerParam, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'player_param', [PlayerParam, None], None, ),  # 2
 )
 
 
@@ -1386,12 +1485,14 @@ SendPlayerParams_result.thrift_spec = (
 class SendPlayerType_args(object):
     """
     Attributes:
+     - register_response
      - player_type
 
     """
 
 
-    def __init__(self, player_type=None,):
+    def __init__(self, register_response=None, player_type=None,):
+        self.register_response = register_response
         self.player_type = player_type
 
     def read(self, iprot):
@@ -1404,6 +1505,12 @@ class SendPlayerType_args(object):
             if ftype == TType.STOP:
                 break
             if fid == 1:
+                if ftype == TType.STRUCT:
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
                 if ftype == TType.STRUCT:
                     self.player_type = PlayerType()
                     self.player_type.read(iprot)
@@ -1419,8 +1526,12 @@ class SendPlayerType_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendPlayerType_args')
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
+            oprot.writeFieldEnd()
         if self.player_type is not None:
-            oprot.writeFieldBegin('player_type', TType.STRUCT, 1)
+            oprot.writeFieldBegin('player_type', TType.STRUCT, 2)
             self.player_type.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
@@ -1442,7 +1553,8 @@ class SendPlayerType_args(object):
 all_structs.append(SendPlayerType_args)
 SendPlayerType_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'player_type', [PlayerType, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
+    (2, TType.STRUCT, 'player_type', [PlayerType, None], None, ),  # 2
 )
 
 
@@ -1508,16 +1620,16 @@ SendPlayerType_result.thrift_spec = (
 )
 
 
-class GetInitMessage_args(object):
+class Register_args(object):
     """
     Attributes:
-     - empty
+     - request
 
     """
 
 
-    def __init__(self, empty=None,):
-        self.empty = empty
+    def __init__(self, request=None,):
+        self.request = request
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1530,8 +1642,8 @@ class GetInitMessage_args(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.empty = Empty()
-                    self.empty.read(iprot)
+                    self.request = RegisterRequest()
+                    self.request.read(iprot)
                 else:
                     iprot.skip(ftype)
             else:
@@ -1543,10 +1655,10 @@ class GetInitMessage_args(object):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin('GetInitMessage_args')
-        if self.empty is not None:
-            oprot.writeFieldBegin('empty', TType.STRUCT, 1)
-            self.empty.write(oprot)
+        oprot.writeStructBegin('Register_args')
+        if self.request is not None:
+            oprot.writeFieldBegin('request', TType.STRUCT, 1)
+            self.request.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -1564,14 +1676,14 @@ class GetInitMessage_args(object):
 
     def __ne__(self, other):
         return not (self == other)
-all_structs.append(GetInitMessage_args)
-GetInitMessage_args.thrift_spec = (
+all_structs.append(Register_args)
+Register_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'empty', [Empty, None], None, ),  # 1
+    (1, TType.STRUCT, 'request', [RegisterRequest, None], None, ),  # 1
 )
 
 
-class GetInitMessage_result(object):
+class Register_result(object):
     """
     Attributes:
      - success
@@ -1593,7 +1705,7 @@ class GetInitMessage_result(object):
                 break
             if fid == 0:
                 if ftype == TType.STRUCT:
-                    self.success = InitMessageFromServer()
+                    self.success = RegisterResponse()
                     self.success.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -1606,7 +1718,7 @@ class GetInitMessage_result(object):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin('GetInitMessage_result')
+        oprot.writeStructBegin('Register_result')
         if self.success is not None:
             oprot.writeFieldBegin('success', TType.STRUCT, 0)
             self.success.write(oprot)
@@ -1627,22 +1739,22 @@ class GetInitMessage_result(object):
 
     def __ne__(self, other):
         return not (self == other)
-all_structs.append(GetInitMessage_result)
-GetInitMessage_result.thrift_spec = (
-    (0, TType.STRUCT, 'success', [InitMessageFromServer, None], None, ),  # 0
+all_structs.append(Register_result)
+Register_result.thrift_spec = (
+    (0, TType.STRUCT, 'success', [RegisterResponse, None], None, ),  # 0
 )
 
 
 class SendByeCommand_args(object):
     """
     Attributes:
-     - empty
+     - register_response
 
     """
 
 
-    def __init__(self, empty=None,):
-        self.empty = empty
+    def __init__(self, register_response=None,):
+        self.register_response = register_response
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -1655,8 +1767,8 @@ class SendByeCommand_args(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.empty = Empty()
-                    self.empty.read(iprot)
+                    self.register_response = RegisterResponse()
+                    self.register_response.read(iprot)
                 else:
                     iprot.skip(ftype)
             else:
@@ -1669,9 +1781,9 @@ class SendByeCommand_args(object):
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
         oprot.writeStructBegin('SendByeCommand_args')
-        if self.empty is not None:
-            oprot.writeFieldBegin('empty', TType.STRUCT, 1)
-            self.empty.write(oprot)
+        if self.register_response is not None:
+            oprot.writeFieldBegin('register_response', TType.STRUCT, 1)
+            self.register_response.write(oprot)
             oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
@@ -1692,7 +1804,7 @@ class SendByeCommand_args(object):
 all_structs.append(SendByeCommand_args)
 SendByeCommand_args.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'empty', [Empty, None], None, ),  # 1
+    (1, TType.STRUCT, 'register_response', [RegisterResponse, None], None, ),  # 1
 )
 
 

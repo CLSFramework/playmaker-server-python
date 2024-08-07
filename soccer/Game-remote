@@ -24,15 +24,15 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
     print('Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] [-s[sl]] [-novalidate] [-ca_certs certs] [-keyfile keyfile] [-certfile certfile] function [arg1 [arg2...]]')
     print('')
     print('Functions:')
-    print('  PlayerActions GetPlayerActions(State state)')
-    print('  CoachActions GetCoachActions(State state)')
-    print('  TrainerActions GetTrainerActions(State state)')
-    print('  Empty SendInitMessage(InitMessage init_message)')
-    print('  Empty SendServerParams(ServerParam server_param)')
-    print('  Empty SendPlayerParams(PlayerParam player_param)')
-    print('  Empty SendPlayerType(PlayerType player_type)')
-    print('  InitMessageFromServer GetInitMessage(Empty empty)')
-    print('  Empty SendByeCommand(Empty empty)')
+    print('  PlayerActions GetPlayerActions(RegisterResponse register_response, State state)')
+    print('  CoachActions GetCoachActions(RegisterResponse register_response, State state)')
+    print('  TrainerActions GetTrainerActions(RegisterResponse register_response, State state)')
+    print('  Empty SendInitMessage(RegisterResponse register_response, InitMessage init_message)')
+    print('  Empty SendServerParams(RegisterResponse register_response, ServerParam server_param)')
+    print('  Empty SendPlayerParams(RegisterResponse register_response, PlayerParam player_param)')
+    print('  Empty SendPlayerType(RegisterResponse register_response, PlayerType player_type)')
+    print('  RegisterResponse Register(RegisterRequest request)')
+    print('  Empty SendByeCommand(RegisterResponse register_response)')
     print('')
     sys.exit(0)
 
@@ -113,52 +113,52 @@ client = Game.Client(protocol)
 transport.open()
 
 if cmd == 'GetPlayerActions':
-    if len(args) != 1:
-        print('GetPlayerActions requires 1 args')
+    if len(args) != 2:
+        print('GetPlayerActions requires 2 args')
         sys.exit(1)
-    pp.pprint(client.GetPlayerActions(eval(args[0]),))
+    pp.pprint(client.GetPlayerActions(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'GetCoachActions':
-    if len(args) != 1:
-        print('GetCoachActions requires 1 args')
+    if len(args) != 2:
+        print('GetCoachActions requires 2 args')
         sys.exit(1)
-    pp.pprint(client.GetCoachActions(eval(args[0]),))
+    pp.pprint(client.GetCoachActions(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'GetTrainerActions':
-    if len(args) != 1:
-        print('GetTrainerActions requires 1 args')
+    if len(args) != 2:
+        print('GetTrainerActions requires 2 args')
         sys.exit(1)
-    pp.pprint(client.GetTrainerActions(eval(args[0]),))
+    pp.pprint(client.GetTrainerActions(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'SendInitMessage':
-    if len(args) != 1:
-        print('SendInitMessage requires 1 args')
+    if len(args) != 2:
+        print('SendInitMessage requires 2 args')
         sys.exit(1)
-    pp.pprint(client.SendInitMessage(eval(args[0]),))
+    pp.pprint(client.SendInitMessage(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'SendServerParams':
-    if len(args) != 1:
-        print('SendServerParams requires 1 args')
+    if len(args) != 2:
+        print('SendServerParams requires 2 args')
         sys.exit(1)
-    pp.pprint(client.SendServerParams(eval(args[0]),))
+    pp.pprint(client.SendServerParams(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'SendPlayerParams':
-    if len(args) != 1:
-        print('SendPlayerParams requires 1 args')
+    if len(args) != 2:
+        print('SendPlayerParams requires 2 args')
         sys.exit(1)
-    pp.pprint(client.SendPlayerParams(eval(args[0]),))
+    pp.pprint(client.SendPlayerParams(eval(args[0]), eval(args[1]),))
 
 elif cmd == 'SendPlayerType':
-    if len(args) != 1:
-        print('SendPlayerType requires 1 args')
+    if len(args) != 2:
+        print('SendPlayerType requires 2 args')
         sys.exit(1)
-    pp.pprint(client.SendPlayerType(eval(args[0]),))
+    pp.pprint(client.SendPlayerType(eval(args[0]), eval(args[1]),))
 
-elif cmd == 'GetInitMessage':
+elif cmd == 'Register':
     if len(args) != 1:
-        print('GetInitMessage requires 1 args')
+        print('Register requires 1 args')
         sys.exit(1)
-    pp.pprint(client.GetInitMessage(eval(args[0]),))
+    pp.pprint(client.Register(eval(args[0]),))
 
 elif cmd == 'SendByeCommand':
     if len(args) != 1:

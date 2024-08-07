@@ -12,8 +12,6 @@ class PlayOnDecisionMaker(IDecisionMaker):
     
     def make_decision(self, agent: IAgent):
         if agent.wm.myself.is_kickable:
-            print("PlayOnDecisionMaker: is_kickable")
             self.withBallDecisionMaker.make_decision(agent)
         else:
-            print("PlayOnDecisionMaker: not is_kickable")
             self.noBallDecisionMaker.make_decision(agent)

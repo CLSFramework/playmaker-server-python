@@ -7,7 +7,7 @@ from pyrusgeom.geom_2d import *
 from src.GEN_Pass import GeneratorPass
 from src.IBallAction import BallAction
 import time
-from soccer.ttypes import LoggerLevel, PlayerAction, Body_HoldBall, Neck_ScanField, Body_SmartKick, ThriftVector2D
+from soccer.ttypes import LoggerLevel, PlayerAction, Body_HoldBall, Neck_ScanField, Body_SmartKick, ThriftVector2D, HeliosChainAction
 
 class WithBallDecisionMaker(IDecisionMaker):
     def __init__(self):
@@ -18,43 +18,52 @@ class WithBallDecisionMaker(IDecisionMaker):
     sum_time = 0
     count = 0
     def make_decision(self, agent: IAgent):
-        start_time = time.time()
-        candidate_actions: list[BallAction] = []
-        candidate_actions = self.pass_generator.generate(agent, 0)
-        candidate_actions += self.dribble_generator.generator(agent)
-
-        if len(candidate_actions) == 0:
-            agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
-            agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
-            return
-
-        if agent.debug_mode:
-            agent.add_log_text(LoggerLevel.PASS, f"candidate_actions: {candidate_actions}")
-        candidate_actions.sort(key=lambda x: x.score, reverse=True)
-
-        best_action = None
-        i = 0
-        best_score = -1000000
-        for candidate in candidate_actions:
-            candidate.check_possibility(agent)
-            i += 1
-            if candidate.success:
-                if candidate.score > best_score:
-                    best_score = candidate.score
-                    best_action = candidate
-                    break        
-        end_time = time.time()
-        WithBallDecisionMaker.sum_time += end_time - start_time
-        WithBallDecisionMaker.count += 1
-        print(f"{agent.wm.cycle} {i} {len(candidate_actions)} {float(i) / len(candidate_actions)} {candidate.score} {end_time - start_time} {WithBallDecisionMaker.sum_time / WithBallDecisionMaker.count}")
-        if best_action is None:
-            agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
-            agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
-            return
-        
-        agent.add_action(PlayerAction(body_smart_kick=Body_SmartKick(
-            target_point=ThriftVector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
-            first_speed=best_action.firstVelocity.r(),
-            first_speed_threshold=0.0,
-            max_steps=3)))
-        agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
+        # start_time = time.time()
+        # candidate_actions: list[BallAction] = []
+        # candidate_actions = self.pass_generator.generate(agent, 0)
+        # candidate_actions += self.dribble_generator.generator(agent)
+        #
+        # if len(candidate_actions) == 0:
+        #     agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
+        #     agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
+        #     return
+        #
+        # if agent.debug_mode:
+        #     agent.add_log_text(LoggerLevel.PASS, f"candidate_actions: {candidate_actions}")
+        # candidate_actions.sort(key=lambda x: x.score, reverse=True)
+        #
+        # best_action = None
+        # i = 0
+        # best_score = -1000000
+        # for candidate in candidate_actions:
+        #     candidate.check_possibility(agent)
+        #     i += 1
+        #     if candidate.success:
+        #         if candidate.score > best_score:
+        #             best_score = candidate.score
+        #             best_action = candidate
+        #             break
+        # end_time = time.time()
+        # WithBallDecisionMaker.sum_time += end_time - start_time
+        # WithBallDecisionMaker.count += 1
+        # print(f"{agent.wm.cycle} {i} {len(candidate_actions)} {float(i) / len(candidate_actions)} {candidate.score} {end_time - start_time} {WithBallDecisionMaker.sum_time / WithBallDecisionMaker.count}")
+        # if best_action is None:
+        #     agent.add_action(PlayerAction(body_hold_ball=Body_HoldBall()))
+        #     agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
+        #     return
+        #
+        # agent.add_action(PlayerAction(body_smart_kick=Body_SmartKick(
+        #     target_point=ThriftVector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
+        #     first_speed=best_action.firstVelocity.r(),
+        #     first_speed_threshold=0.0,
+        #     max_steps=3)))
+        # agent.add_action(PlayerAction(neck_scan_field=Neck_ScanField()))
+        agent.add_action(PlayerAction(helios_chain_action=HeliosChainAction(direct_pass=True,
+        lead_pass=True,
+        through_pass=True,
+        short_dribble=True,
+        long_dribble=True,
+        cross=True,
+        simple_pass=False,
+        simple_dribble=False,
+        simple_shoot=True)))

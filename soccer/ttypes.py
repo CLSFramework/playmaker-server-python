@@ -13992,8 +13992,20 @@ class Empty(object):
         return not (self == other)
 
 
-class InitMessageFromServer(object):
+class RegisterRequest(object):
+    """
+    Attributes:
+     - agent_type
+     - team_name
+     - uniform_number
 
+    """
+
+
+    def __init__(self, agent_type=None, team_name=None, uniform_number=None,):
+        self.agent_type = agent_type
+        self.team_name = team_name
+        self.uniform_number = uniform_number
 
     def read(self, iprot):
         if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
@@ -14004,6 +14016,21 @@ class InitMessageFromServer(object):
             (fname, ftype, fid) = iprot.readFieldBegin()
             if ftype == TType.STOP:
                 break
+            if fid == 1:
+                if ftype == TType.I32:
+                    self.agent_type = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 2:
+                if ftype == TType.STRING:
+                    self.team_name = iprot.readString().decode('utf-8', errors='replace') if sys.version_info[0] == 2 else iprot.readString()
+                else:
+                    iprot.skip(ftype)
+            elif fid == 3:
+                if ftype == TType.I32:
+                    self.uniform_number = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
             else:
                 iprot.skip(ftype)
             iprot.readFieldEnd()
@@ -14013,7 +14040,76 @@ class InitMessageFromServer(object):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin('InitMessageFromServer')
+        oprot.writeStructBegin('RegisterRequest')
+        if self.agent_type is not None:
+            oprot.writeFieldBegin('agent_type', TType.I32, 1)
+            oprot.writeI32(self.agent_type)
+            oprot.writeFieldEnd()
+        if self.team_name is not None:
+            oprot.writeFieldBegin('team_name', TType.STRING, 2)
+            oprot.writeString(self.team_name.encode('utf-8') if sys.version_info[0] == 2 else self.team_name)
+            oprot.writeFieldEnd()
+        if self.uniform_number is not None:
+            oprot.writeFieldBegin('uniform_number', TType.I32, 3)
+            oprot.writeI32(self.uniform_number)
+            oprot.writeFieldEnd()
+        oprot.writeFieldStop()
+        oprot.writeStructEnd()
+
+    def validate(self):
+        return
+
+    def __repr__(self):
+        L = ['%s=%r' % (key, value)
+             for key, value in self.__dict__.items()]
+        return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+    def __eq__(self, other):
+        return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not (self == other)
+
+
+class RegisterResponse(object):
+    """
+    Attributes:
+     - client_id
+
+    """
+
+
+    def __init__(self, client_id=None,):
+        self.client_id = client_id
+
+    def read(self, iprot):
+        if iprot._fast_decode is not None and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None:
+            iprot._fast_decode(self, iprot, [self.__class__, self.thrift_spec])
+            return
+        iprot.readStructBegin()
+        while True:
+            (fname, ftype, fid) = iprot.readFieldBegin()
+            if ftype == TType.STOP:
+                break
+            if fid == 1:
+                if ftype == TType.I32:
+                    self.client_id = iprot.readI32()
+                else:
+                    iprot.skip(ftype)
+            else:
+                iprot.skip(ftype)
+            iprot.readFieldEnd()
+        iprot.readStructEnd()
+
+    def write(self, oprot):
+        if oprot._fast_encode is not None and self.thrift_spec is not None:
+            oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
+            return
+        oprot.writeStructBegin('RegisterResponse')
+        if self.client_id is not None:
+            oprot.writeFieldBegin('client_id', TType.I32, 1)
+            oprot.writeI32(self.client_id)
+            oprot.writeFieldEnd()
         oprot.writeFieldStop()
         oprot.writeStructEnd()
 
@@ -15215,8 +15311,17 @@ PlayerType.thrift_spec = (
 all_structs.append(Empty)
 Empty.thrift_spec = (
 )
-all_structs.append(InitMessageFromServer)
-InitMessageFromServer.thrift_spec = (
+all_structs.append(RegisterRequest)
+RegisterRequest.thrift_spec = (
+    None,  # 0
+    (1, TType.I32, 'agent_type', None, None, ),  # 1
+    (2, TType.STRING, 'team_name', 'UTF8', None, ),  # 2
+    (3, TType.I32, 'uniform_number', None, None, ),  # 3
+)
+all_structs.append(RegisterResponse)
+RegisterResponse.thrift_spec = (
+    None,  # 0
+    (1, TType.I32, 'client_id', None, None, ),  # 1
 )
 fix_spec(all_structs)
 del all_structs
