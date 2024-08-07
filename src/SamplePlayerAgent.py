@@ -18,7 +18,7 @@ class SamplePlayerAgent(IAgent, ABC):
     def get_actions(self, wm:pb2.WorldModel) -> pb2.PlayerActions:
         self.wm = wm
         self.actions.clear()
-        self.strategy.update(wm)
+        # self.strategy.update(wm)
         self.decisionMaker.make_decision(self)
         actions = pb2.PlayerActions()
         actions.actions.extend(self.actions)
