@@ -33,7 +33,7 @@ class GameHandler:
         return CoachActions(actions=actions)
 
     def GetTrainerActions(self, register_response: RegisterResponse, state):
-        # print("GetTrainerActions", state.world_model.cycle)
+        print("GetTrainerActions", state.world_model.cycle)
         actions = self.agents[register_response.client_id].get_actions(state.world_model)
         return TrainerActions(actions=actions)
 
