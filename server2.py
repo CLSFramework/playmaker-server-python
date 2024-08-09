@@ -123,18 +123,24 @@ class PFProcessServer(TServer):
             if otrans:
                 otrans.close()
 
-class GameHandler:
-    def __init__(self):
-        self.agents: dict[int, Union[SamplePlayerAgent, SampleTrainerAgent, SampleCoachAgent]] = {}
+from multiprocessing import Manager
+manager = Manager()
+shared_int = manager.Value('i', 0)
 
-        self.number_of_connections = 0
-        self.lock = Semaphore()
+
+class GameHandler:
+    number_of_connections = 0
+    lock = threading.Lock()
+    agents: dict[int, Union[SamplePlayerAgent, SampleTrainerAgent, SampleCoachAgent]] = {}
+
+    def __init__(self):
         self.running = Semaphore()
 
     def GetPlayerActions(self, register_response: RegisterResponse, state: State):
         print("GetPlayerActions", state.world_model.cycle)
         print("number of connections", self.number_of_connections)
         print(f"Starting thread {threading.get_ident()}")
+        print(f"shared_int {shared_int.value}")
         actions = self.agents[register_response.client_id].get_actions(state.world_model)
         res = PlayerActions(actions=actions)
         return res
@@ -176,7 +182,9 @@ class GameHandler:
     def Register(self, register_request: RegisterRequest):
         print("New connection")
         with self.lock:
+            shared_int.value += 1
             self.number_of_connections += 1
+            print("Number of connections", self.number_of_connections, shared_int.value)
             if register_request.agent_type == AgentType.PlayerT:
                 self.agents[self.number_of_connections] = SamplePlayerAgent()
             elif register_request.agent_type == AgentType.CoachT:
@@ -195,20 +203,18 @@ class GameHandler:
 
 
 class GameProcessorFactory:
-    def __init__(self):
+    def __init__(self, ):
         pass
+
     def getProcessor(self, client):
         return Game.Processor(GameHandler())  # could optionally pass client to GameHandler if desired
 
 def serve(port):
     handler = GameHandler()
-    processor = Game.Processor(handler)
     transport = TSocket.TServerSocket(host='0.0.0.0', port=port)
     tfactory = TTransport.TBufferedTransportFactory()
     pfactory = TBinaryProtocol.TBinaryProtocolFactory()
 
-    # server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
-    # server = TServer.TThreadPoolServer(processor, transport, tfactory, pfactory)
     # server = PFThreadedServer(GameProcessorFactory(), transport, tfactory, pfactory)
     server = PFProcessServer(GameProcessorFactory(), transport, tfactory, pfactory)
     print("Thrift server started at port 50051")
