@@ -1,7 +1,8 @@
 from typing import Union
 from thrift import Thrift
 from thrift.protocol import TBinaryProtocol
-from thrift.server import TServer
+from thrift.protocol.THeaderProtocol import THeaderProtocolFactory
+from thrift.server.TServer import TServer
 from thrift.transport import TSocket, TTransport
 from soccer import Game
 from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions
@@ -12,6 +13,149 @@ from src.SampleTrainerAgent import SampleTrainerAgent
 from threading import Semaphore
 import os
 import sys
+import threading
+import queue
+import logging as logger
+
+import asyncio
+
+def start_loop(loop):
+    asyncio.set_event_loop(loop)
+    loop.run_forever()
+
+def run_async_func_in_new_thread(target, *args):
+    new_loop = asyncio.new_event_loop()
+    t = threading.Thread(target=start_loop, args=(new_loop,))
+    t.start()
+
+    asyncio.run_coroutine_threadsafe(target(*args), new_loop)
+class TThreadedServer2(TServer):
+    """Threaded server that spawns a new thread per each connection."""
+
+    def __init__(self, *args, **kwargs):
+        TServer.__init__(self, *args)
+        self.daemon = kwargs.get("daemon", False)
+
+    def serve(self):
+        self.serverTransport.listen()
+        while True:
+            try:
+                client = self.serverTransport.accept()
+                if not client:
+                    continue
+                t = threading.Thread(target=self.start_event_loop, args=(client,))
+                # run_async_func_in_new_thread(self.handle, client)
+
+                # t = threading.Thread(target=self.handle, args=(client,))
+                t.setDaemon(self.daemon)
+                t.start()
+            except KeyboardInterrupt:
+                raise
+            except Exception as x:
+                logger.exception(x)
+
+    def start_event_loop(self, client):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self.handle(client))
+        loop.close()
+
+    async def handle(self, client):
+        itrans = self.inputTransportFactory.getTransport(client)
+        iprot = self.inputProtocolFactory.getProtocol(itrans)
+
+        # for THeaderProtocol, we must use the same protocol instance for input
+        # and output so that the response is in the same dialect that the
+        # server detected the request was in.
+        if isinstance(self.inputProtocolFactory, THeaderProtocolFactory):
+            otrans = None
+            oprot = iprot
+        else:
+            otrans = self.outputTransportFactory.getTransport(client)
+            oprot = self.outputProtocolFactory.getProtocol(otrans)
+
+        try:
+            while True:
+                await self.processor.process(iprot, oprot)
+        except TTransport.TTransportException:
+            pass
+        except Exception as x:
+            logger.exception(x)
+
+        itrans.close()
+        if otrans:
+            otrans.close()
+
+class TThreadPoolServer2(TServer):
+    """Server with a fixed size pool of threads which service requests."""
+
+    def __init__(self, *args, **kwargs):
+        TServer.__init__(self, *args)
+        self.clients = queue.Queue()
+        self.threads = 10
+        self.daemon = kwargs.get("daemon", False)
+
+    def setNumThreads(self, num):
+        """Set the number of worker threads that should be created"""
+        self.threads = num
+
+    def serveThread(self):
+        """Loop around getting clients from the shared queue and process them."""
+        while True:
+            try:
+                client = self.clients.get()
+                self.serveClient(client)
+            except Exception as x:
+                logger.exception(x)
+
+    def serveClient(self, client):
+        """Process input/output from a client for as long as possible"""
+        itrans = self.inputTransportFactory.getTransport(client)
+        iprot = self.inputProtocolFactory.getProtocol(itrans)
+
+        # for THeaderProtocol, we must use the same protocol instance for input
+        # and output so that the response is in the same dialect that the
+        # server detected the request was in.
+        if isinstance(self.inputProtocolFactory, THeaderProtocolFactory):
+            otrans = None
+            oprot = iprot
+        else:
+            otrans = self.outputTransportFactory.getTransport(client)
+            oprot = self.outputProtocolFactory.getProtocol(otrans)
+
+        try:
+            while True:
+                self.processor.process(iprot, oprot)
+        except TTransport.TTransportException:
+            pass
+        except Exception as x:
+            logger.exception(x)
+
+        itrans.close()
+        if otrans:
+            otrans.close()
+
+    def serve(self):
+        """Start a fixed number of worker threads and put client into a queue"""
+        for i in range(self.threads):
+            try:
+                t = threading.Thread(target=self.serveThread)
+                t.setDaemon(self.daemon)
+                t.start()
+            except Exception as x:
+                logger.exception(x)
+
+        # Pump the socket for clients
+        self.serverTransport.listen()
+        while True:
+            try:
+                client = self.serverTransport.accept()
+                if not client:
+                    continue
+                self.clients.put(client)
+            except Exception as x:
+                logger.exception(x)
+
 
 class GameHandler:
     def __init__(self):
@@ -89,8 +233,8 @@ def serve(port):
     pfactory = TBinaryProtocol.TBinaryProtocolFactory()
 
     # server = TServer.TSimpleServer(processor, transport, tfactory, pfactory)
-    server = TServer.TThreadPoolServer(processor, transport, tfactory, pfactory)
-    server.setNumThreads(50)
+    server = TThreadedServer2(processor, transport, tfactory, pfactory)
+    # server.setNumThreads(50)
     print("Thrift server started at port 50051")
     try:
         handler.running.acquire()
