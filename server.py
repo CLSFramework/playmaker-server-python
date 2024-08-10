@@ -1,12 +1,14 @@
 from thrift.protocol import TBinaryProtocol
-from thrift.transport import TSocket, TTransport, THeaderTransport
+from thrift.transport import TSocket, TTransport
 from soccer import Game
 import sys
 import os
 from utils.PFProcessServer import PFProcessServer
 from thrift.server.TServer import TThreadedServer
 from utils.GameHandler import GameHandler
+import logging
 
+logging.basicConfig(level=logging.INFO)
 
 def serve(port):
     handler = GameHandler()
@@ -18,7 +20,7 @@ def serve(port):
     server = PFProcessServer(processor, transport, tfactory, pfactory)
     # server = TThreadedServer(processor, transport, tfactory, pfactory)
 
-    print(f"Thrift server started at port {port}")
+    logging.info(f"Starting server on port {port}")
     try:
         handler.running.acquire()
         server.serve()
