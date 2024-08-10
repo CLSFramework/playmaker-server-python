@@ -1,24 +1,14 @@
 import threading
 from typing import Union
-from thrift import Thrift
-from thrift.protocol import TBinaryProtocol
-from thrift.protocol.THeaderProtocol import THeaderProtocolFactory
-from thrift.server.TServer import TServer, TSimpleServer
-from thrift.transport import TSocket, TTransport, THeaderTransport
-from soccer import Game
 from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions
 from soccer.ttypes import ServerParam, PlayerParam, PlayerType, InitMessage, RegisterRequest, RegisterResponse, AgentType
 from src.SamplePlayerAgent import SamplePlayerAgent
 from src.SampleCoachAgent import SampleCoachAgent
 from src.SampleTrainerAgent import SampleTrainerAgent
 from threading import Semaphore
-import sys
-import logging
-import time
-import asyncio
-import multiprocessing
-import os
 from multiprocessing import Manager, Lock
+
+
 manager = Manager()
 shared_lock = Lock()  # Create a Lock for synchronization
 shared_number_of_connections = manager.Value('i', 0)
