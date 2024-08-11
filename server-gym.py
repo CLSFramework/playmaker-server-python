@@ -22,6 +22,12 @@ import logging
 import random
 
 logging.basicConfig(level=logging.DEBUG)
+#set color to logging
+logging.addLevelName(logging.DEBUG, "\033[1;34m%s\033[1;0m" % logging.getLevelName(logging.DEBUG))
+logging.addLevelName(logging.INFO, "\033[1;32m%s\033[1;0m" % logging.getLevelName(logging.INFO))
+logging.addLevelName(logging.WARNING, "\033[1;33m%s\033[1;0m" % logging.getLevelName(logging.WARNING))
+logging.addLevelName(logging.ERROR, "\033[1;31m%s\033[1;0m" % logging.getLevelName(logging.ERROR))
+logging.addLevelName(logging.CRITICAL, "\033[1;41m%s\033[1;0m" % logging.getLevelName(logging.CRITICAL))
 
 manager = Manager()
 shared_lock = Lock()  # Create a Lock for synchronization
@@ -41,10 +47,17 @@ class SoccerEnv(gym.Env):
         return observation_queue.get()
 
     def step(self, action):
+        logging.debug(f"SoccerEnv: step {action}")
         self.action_queue.put(action)
+        logging.debug("SoccerEnv: Waiting for reward_done")
+        self.request_to_trainer.put(Empty())
         reward_done = self.reward_done_queue.get()
+        logging.debug(f"SoccerEnv: Reward done: {reward_done}")
         # reward_done = RewardDone(0, False)
+        logging.debug("SoccerEnv: Waiting for observation")
         obs = self.observation_queue.get()
+        logging.debug(f"SoccerEnv: Observation: {obs}")
+        logging.debug(f"SoccerEnv: Returning observation: {obs}, reward: {reward_done.reward}, done: {reward_done.done}")
         return obs, reward_done.reward, reward_done.done, {}
 
     def render(self):
@@ -72,7 +85,7 @@ class GameHandler:
         self.request_to_trainer = request_to_trainer
 
     def GetPlayerActions(self, register_response: RegisterResponse, state: State):
-        logging.debug(f"GetPlayerActions {state.world_model.cycle}")
+        logging.info(f"Handler: GetPlayerActions {state.world_model.cycle}")
         wm: WorldModel = state.world_model
         myself: Self = wm.myself
         self.observation_queue.put([myself.position.x, myself.position.y, myself.body_direction])
@@ -81,7 +94,7 @@ class GameHandler:
 
         actions: list[PlayerAction] = [PlayerAction(dash=dash)]
         res = PlayerActions(actions=actions)
-        logging.debug(f"Player actions: {res}")
+        logging.info(f"Handler: Player actions: {res}")
         return res
 
     def GetCoachActions(self, register_response: RegisterResponse, state):
@@ -93,21 +106,25 @@ class GameHandler:
 
         if len(state.world_model.teammates) == 0:
             return TrainerActions(actions=[])
-        logging.debug(f"GetTrainerActions {state.world_model.cycle}")
+        if self.request_to_trainer.empty():
+            return TrainerActions(actions=[])
+        logging.error(f"Handler: GetTrainerActions {state.world_model.cycle}")
         player_pos = state.world_model.teammates[0].position
-        logging.debug(f"Player position: {player_pos.x} {player_pos.y}")
-        if player_pos.x > 10:
+        logging.error(f"Handler: Player position: {player_pos.x} {player_pos.y}")
+        if player_pos.x > -25:
             action = TrainerAction(
                 do_move_player=DoMovePlayer(
                     our_side=True,
                     uniform_number=1,
                     body_direction=0,
-                    position=ThriftVector2D(x=-10, y=0)
+                    position=ThriftVector2D(x=-45, y=0)
                 )
             )
+            logging.error("Handler: >>done")
             self.reward_done_queue.put(RewardDone(10, True))
             return TrainerActions(actions=[action])
         else:
+            logging.error("Handler: >>not done")
             self.reward_done_queue.put(RewardDone(0, False))
             return TrainerActions(actions=[])
 
@@ -176,19 +193,19 @@ def serve(port, action_queue, observation_queue, reward_done_queue, request_to_t
 
 
 def rl(action_queue, observation_queue, reward_done_queue, request_to_trainer):
-    logging.info("RL Process started")
+    logging.critical("RL: Process started")
     env = SoccerEnv(action_queue, observation_queue, reward_done_queue, request_to_trainer)
     logging.info("Environment created")
+    logging.critical("RL:Resetting environment")
+    obs = env.reset()
     while True:
-        logging.info("Resetting environment")
-        obs = env.reset()
-        logging.info(f"Environment reset with observation: {obs}")
+        logging.critical(f"RL:Environment reset with observation: {obs}")
         done = False
         while not done:
             action = random.randint(0, 360)
-            logging.info(f"Taking action: {action}")
+            logging.critical(f"RL:Taking action: {action}")
             obs, reward, done, _ = env.step(action)
-            logging.info(f"Observation: {obs} Reward: {reward} Done: {done}")
+            logging.critical(f"RL:Observation: {obs} Reward: {reward} Done: {done}")
         env.distruct()
 
 if __name__ == '__main__':
