@@ -274,7 +274,7 @@ class GameModeType(object):
     }
 
 
-class ThriftVector2D(object):
+class RpcVector2D(object):
     """
     Attributes:
      - x
@@ -329,7 +329,7 @@ class ThriftVector2D(object):
         if oprot._fast_encode is not None and self.thrift_spec is not None:
             oprot.trans.write(oprot._fast_encode(self, [self.__class__, self.thrift_spec]))
             return
-        oprot.writeStructBegin('ThriftVector2D')
+        oprot.writeStructBegin('RpcVector2D')
         if self.x is not None:
             oprot.writeFieldBegin('x', TType.DOUBLE, 1)
             oprot.writeDouble(self.x)
@@ -418,43 +418,43 @@ class Ball(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.relative_position = ThriftVector2D()
+                    self.relative_position = RpcVector2D()
                     self.relative_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.seen_position = ThriftVector2D()
+                    self.seen_position = RpcVector2D()
                     self.seen_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.heard_position = ThriftVector2D()
+                    self.heard_position = RpcVector2D()
                     self.heard_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRUCT:
-                    self.velocity = ThriftVector2D()
+                    self.velocity = RpcVector2D()
                     self.velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 6:
                 if ftype == TType.STRUCT:
-                    self.seen_velocity = ThriftVector2D()
+                    self.seen_velocity = RpcVector2D()
                     self.seen_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 7:
                 if ftype == TType.STRUCT:
-                    self.heard_velocity = ThriftVector2D()
+                    self.heard_velocity = RpcVector2D()
                     self.heard_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -684,31 +684,31 @@ class Player(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.seen_position = ThriftVector2D()
+                    self.seen_position = RpcVector2D()
                     self.seen_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.heard_position = ThriftVector2D()
+                    self.heard_position = RpcVector2D()
                     self.heard_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.velocity = ThriftVector2D()
+                    self.velocity = RpcVector2D()
                     self.velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRUCT:
-                    self.seen_velocity = ThriftVector2D()
+                    self.seen_velocity = RpcVector2D()
                     self.seen_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -1077,31 +1077,31 @@ class Self(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.seen_position = ThriftVector2D()
+                    self.seen_position = RpcVector2D()
                     self.seen_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.heard_position = ThriftVector2D()
+                    self.heard_position = RpcVector2D()
                     self.heard_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.velocity = ThriftVector2D()
+                    self.velocity = RpcVector2D()
                     self.velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRUCT:
-                    self.seen_velocity = ThriftVector2D()
+                    self.seen_velocity = RpcVector2D()
                     self.seen_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -1502,7 +1502,7 @@ class InterceptInfo(object):
                     iprot.skip(ftype)
             elif fid == 7:
                 if ftype == TType.STRUCT:
-                    self.final_self_position = ThriftVector2D()
+                    self.final_self_position = RpcVector2D()
                     self.final_self_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -2025,7 +2025,7 @@ class WorldModel(object):
                     (_ktype40, _vtype41, _size39) = iprot.readMapBegin()
                     for _i43 in range(_size39):
                         _key44 = iprot.readI32()
-                        _val45 = ThriftVector2D()
+                        _val45 = RpcVector2D()
                         _val45.read(iprot)
                         self.helios_home_positions[_key44] = _val45
                     iprot.readMapEnd()
@@ -2860,13 +2860,13 @@ class BallMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.ball_position = ThriftVector2D()
+                    self.ball_position = RpcVector2D()
                     self.ball_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.ball_velocity = ThriftVector2D()
+                    self.ball_velocity = RpcVector2D()
                     self.ball_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -2939,19 +2939,19 @@ class PassMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.receiver_point = ThriftVector2D()
+                    self.receiver_point = RpcVector2D()
                     self.receiver_point.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.ball_position = ThriftVector2D()
+                    self.ball_position = RpcVector2D()
                     self.ball_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.ball_velocity = ThriftVector2D()
+                    self.ball_velocity = RpcVector2D()
                     self.ball_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3109,7 +3109,7 @@ class GoalieMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.goalie_position = ThriftVector2D()
+                    self.goalie_position = RpcVector2D()
                     self.goalie_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3193,7 +3193,7 @@ class GoalieAndPlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.goalie_position = ThriftVector2D()
+                    self.goalie_position = RpcVector2D()
                     self.goalie_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3209,7 +3209,7 @@ class GoalieAndPlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 5:
                 if ftype == TType.STRUCT:
-                    self.player_position = ThriftVector2D()
+                    self.player_position = RpcVector2D()
                     self.player_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3494,7 +3494,7 @@ class PassRequestMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3725,7 +3725,7 @@ class DribbleMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3798,19 +3798,19 @@ class BallGoalieMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.ball_position = ThriftVector2D()
+                    self.ball_position = RpcVector2D()
                     self.ball_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.ball_velocity = ThriftVector2D()
+                    self.ball_velocity = RpcVector2D()
                     self.ball_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.goalie_position = ThriftVector2D()
+                    self.goalie_position = RpcVector2D()
                     self.goalie_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3892,7 +3892,7 @@ class OnePlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3965,7 +3965,7 @@ class TwoPlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.first_position = ThriftVector2D()
+                    self.first_position = RpcVector2D()
                     self.first_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -3976,7 +3976,7 @@ class TwoPlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.second_position = ThriftVector2D()
+                    self.second_position = RpcVector2D()
                     self.second_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4061,7 +4061,7 @@ class ThreePlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.first_position = ThriftVector2D()
+                    self.first_position = RpcVector2D()
                     self.first_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4072,7 +4072,7 @@ class ThreePlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.second_position = ThriftVector2D()
+                    self.second_position = RpcVector2D()
                     self.second_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4083,7 +4083,7 @@ class ThreePlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 6:
                 if ftype == TType.STRUCT:
-                    self.third_position = ThriftVector2D()
+                    self.third_position = RpcVector2D()
                     self.third_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4165,7 +4165,7 @@ class SelfMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.self_position = ThriftVector2D()
+                    self.self_position = RpcVector2D()
                     self.self_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4250,7 +4250,7 @@ class TeammateMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4330,7 +4330,7 @@ class OpponentMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4409,13 +4409,13 @@ class BallPlayerMessage(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.ball_position = ThriftVector2D()
+                    self.ball_position = RpcVector2D()
                     self.ball_position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.ball_velocity = ThriftVector2D()
+                    self.ball_velocity = RpcVector2D()
                     self.ball_velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -4426,7 +4426,7 @@ class BallPlayerMessage(object):
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.player_position = ThriftVector2D()
+                    self.player_position = RpcVector2D()
                     self.player_position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5108,7 +5108,7 @@ class AddPoint(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.point = ThriftVector2D()
+                    self.point = RpcVector2D()
                     self.point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5190,13 +5190,13 @@ class AddLine(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.start_point = ThriftVector2D()
+                    self.start_point = RpcVector2D()
                     self.start_point.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.end_point = ThriftVector2D()
+                    self.end_point = RpcVector2D()
                     self.end_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5286,7 +5286,7 @@ class AddArc(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.center = ThriftVector2D()
+                    self.center = RpcVector2D()
                     self.center.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5397,7 +5397,7 @@ class AddCircle(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.center = ThriftVector2D()
+                    self.center = RpcVector2D()
                     self.center.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5501,19 +5501,19 @@ class AddTriangle(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.point1 = ThriftVector2D()
+                    self.point1 = RpcVector2D()
                     self.point1.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.point2 = ThriftVector2D()
+                    self.point2 = RpcVector2D()
                     self.point2.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 4:
                 if ftype == TType.STRUCT:
-                    self.point3 = ThriftVector2D()
+                    self.point3 = RpcVector2D()
                     self.point3.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5743,7 +5743,7 @@ class AddSector(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.center = ThriftVector2D()
+                    self.center = RpcVector2D()
                     self.center.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -5870,7 +5870,7 @@ class AddMessage(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6165,7 +6165,7 @@ class Body_GoToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6247,7 +6247,7 @@ class Body_SmartKick(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6332,7 +6332,7 @@ class Bhv_BeforeKickOff(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.point = ThriftVector2D()
+                    self.point = RpcVector2D()
                     self.point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6430,7 +6430,7 @@ class Bhv_BodyNeckToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.point = ThriftVector2D()
+                    self.point = RpcVector2D()
                     self.point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6532,7 +6532,7 @@ class Bhv_GoToPointLookBall(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6667,7 +6667,7 @@ class Bhv_NeckBodyToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.point = ThriftVector2D()
+                    self.point = RpcVector2D()
                     self.point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6862,7 +6862,7 @@ class Body_Dribble(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -6958,7 +6958,7 @@ class Body_GoToPointDodge(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7034,13 +7034,13 @@ class Body_HoldBall(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.turn_target_point = ThriftVector2D()
+                    self.turn_target_point = RpcVector2D()
                     self.turn_target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.kick_target_point = ThriftVector2D()
+                    self.kick_target_point = RpcVector2D()
                     self.kick_target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7113,7 +7113,7 @@ class Body_Intercept(object):
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.face_point = ThriftVector2D()
+                    self.face_point = RpcVector2D()
                     self.face_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7179,7 +7179,7 @@ class Body_KickOneStep(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7356,7 +7356,7 @@ class Body_TackleToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7548,7 +7548,7 @@ class Body_TurnToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -7615,7 +7615,7 @@ class Focus_MoveToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -8145,7 +8145,7 @@ class Neck_TurnToPoint(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.target_point = ThriftVector2D()
+                    self.target_point = RpcVector2D()
                     self.target_point.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -10160,13 +10160,13 @@ class DoMoveBall(object):
                 break
             if fid == 1:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
             elif fid == 2:
                 if ftype == TType.STRUCT:
-                    self.velocity = ThriftVector2D()
+                    self.velocity = RpcVector2D()
                     self.velocity.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -10244,7 +10244,7 @@ class DoMovePlayer(object):
                     iprot.skip(ftype)
             elif fid == 3:
                 if ftype == TType.STRUCT:
-                    self.position = ThriftVector2D()
+                    self.position = RpcVector2D()
                     self.position.read(iprot)
                 else:
                     iprot.skip(ftype)
@@ -14126,8 +14126,8 @@ class RegisterResponse(object):
 
     def __ne__(self, other):
         return not (self == other)
-all_structs.append(ThriftVector2D)
-ThriftVector2D.thrift_spec = (
+all_structs.append(RpcVector2D)
+RpcVector2D.thrift_spec = (
     None,  # 0
     (1, TType.DOUBLE, 'x', None, None, ),  # 1
     (2, TType.DOUBLE, 'y', None, None, ),  # 2
@@ -14137,13 +14137,13 @@ ThriftVector2D.thrift_spec = (
 all_structs.append(Ball)
 Ball.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'relative_position', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'seen_position', [ThriftVector2D, None], None, ),  # 3
-    (4, TType.STRUCT, 'heard_position', [ThriftVector2D, None], None, ),  # 4
-    (5, TType.STRUCT, 'velocity', [ThriftVector2D, None], None, ),  # 5
-    (6, TType.STRUCT, 'seen_velocity', [ThriftVector2D, None], None, ),  # 6
-    (7, TType.STRUCT, 'heard_velocity', [ThriftVector2D, None], None, ),  # 7
+    (1, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'relative_position', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'seen_position', [RpcVector2D, None], None, ),  # 3
+    (4, TType.STRUCT, 'heard_position', [RpcVector2D, None], None, ),  # 4
+    (5, TType.STRUCT, 'velocity', [RpcVector2D, None], None, ),  # 5
+    (6, TType.STRUCT, 'seen_velocity', [RpcVector2D, None], None, ),  # 6
+    (7, TType.STRUCT, 'heard_velocity', [RpcVector2D, None], None, ),  # 7
     (8, TType.I32, 'pos_count', None, None, ),  # 8
     (9, TType.I32, 'seen_pos_count', None, None, ),  # 9
     (10, TType.I32, 'heard_pos_count', None, None, ),  # 10
@@ -14158,11 +14158,11 @@ Ball.thrift_spec = (
 all_structs.append(Player)
 Player.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'seen_position', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'heard_position', [ThriftVector2D, None], None, ),  # 3
-    (4, TType.STRUCT, 'velocity', [ThriftVector2D, None], None, ),  # 4
-    (5, TType.STRUCT, 'seen_velocity', [ThriftVector2D, None], None, ),  # 5
+    (1, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'seen_position', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'heard_position', [RpcVector2D, None], None, ),  # 3
+    (4, TType.STRUCT, 'velocity', [RpcVector2D, None], None, ),  # 4
+    (5, TType.STRUCT, 'seen_velocity', [RpcVector2D, None], None, ),  # 5
     (6, TType.I32, 'pos_count', None, None, ),  # 6
     (7, TType.I32, 'seen_pos_count', None, None, ),  # 7
     (8, TType.I32, 'heard_pos_count', None, None, ),  # 8
@@ -14192,11 +14192,11 @@ Player.thrift_spec = (
 all_structs.append(Self)
 Self.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'seen_position', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'heard_position', [ThriftVector2D, None], None, ),  # 3
-    (4, TType.STRUCT, 'velocity', [ThriftVector2D, None], None, ),  # 4
-    (5, TType.STRUCT, 'seen_velocity', [ThriftVector2D, None], None, ),  # 5
+    (1, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'seen_position', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'heard_position', [RpcVector2D, None], None, ),  # 3
+    (4, TType.STRUCT, 'velocity', [RpcVector2D, None], None, ),  # 4
+    (5, TType.STRUCT, 'seen_velocity', [RpcVector2D, None], None, ),  # 5
     (6, TType.I32, 'pos_count', None, None, ),  # 6
     (7, TType.I32, 'seen_pos_count', None, None, ),  # 7
     (8, TType.I32, 'heard_pos_count', None, None, ),  # 8
@@ -14238,7 +14238,7 @@ InterceptInfo.thrift_spec = (
     (4, TType.I32, 'dash_steps', None, None, ),  # 4
     (5, TType.DOUBLE, 'dash_power', None, None, ),  # 5
     (6, TType.DOUBLE, 'dash_dir', None, None, ),  # 6
-    (7, TType.STRUCT, 'final_self_position', [ThriftVector2D, None], None, ),  # 7
+    (7, TType.STRUCT, 'final_self_position', [RpcVector2D, None], None, ),  # 7
     (8, TType.DOUBLE, 'final_ball_dist', None, None, ),  # 8
     (9, TType.DOUBLE, 'final_stamina', None, None, ),  # 9
     (10, TType.DOUBLE, 'value', None, None, ),  # 10
@@ -14290,7 +14290,7 @@ WorldModel.thrift_spec = (
     (28, TType.I32, 'our_team_score', None, None, ),  # 28
     (29, TType.I32, 'their_team_score', None, None, ),  # 29
     (30, TType.BOOL, 'is_penalty_kick_mode', None, None, ),  # 30
-    (31, TType.MAP, 'helios_home_positions', (TType.I32, None, TType.STRUCT, [ThriftVector2D, None], False), None, ),  # 31
+    (31, TType.MAP, 'helios_home_positions', (TType.I32, None, TType.STRUCT, [RpcVector2D, None], False), None, ),  # 31
 )
 all_structs.append(State)
 State.thrift_spec = (
@@ -14350,16 +14350,16 @@ ChangeView.thrift_spec = (
 all_structs.append(BallMessage)
 BallMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ball_position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'ball_velocity', [ThriftVector2D, None], None, ),  # 2
+    (1, TType.STRUCT, 'ball_position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'ball_velocity', [RpcVector2D, None], None, ),  # 2
 )
 all_structs.append(PassMessage)
 PassMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'receiver_uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'receiver_point', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'ball_position', [ThriftVector2D, None], None, ),  # 3
-    (4, TType.STRUCT, 'ball_velocity', [ThriftVector2D, None], None, ),  # 4
+    (2, TType.STRUCT, 'receiver_point', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'ball_position', [RpcVector2D, None], None, ),  # 3
+    (4, TType.STRUCT, 'ball_velocity', [RpcVector2D, None], None, ),  # 4
 )
 all_structs.append(InterceptMessage)
 InterceptMessage.thrift_spec = (
@@ -14372,17 +14372,17 @@ all_structs.append(GoalieMessage)
 GoalieMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'goalie_uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'goalie_position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'goalie_position', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'goalie_body_direction', None, None, ),  # 3
 )
 all_structs.append(GoalieAndPlayerMessage)
 GoalieAndPlayerMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'goalie_uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'goalie_position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'goalie_position', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'goalie_body_direction', None, None, ),  # 3
     (4, TType.I32, 'player_uniform_number', None, None, ),  # 4
-    (5, TType.STRUCT, 'player_position', [ThriftVector2D, None], None, ),  # 5
+    (5, TType.STRUCT, 'player_position', [RpcVector2D, None], None, ),  # 5
 )
 all_structs.append(OffsideLineMessage)
 OffsideLineMessage.thrift_spec = (
@@ -14405,7 +14405,7 @@ SetplayMessage.thrift_spec = (
 all_structs.append(PassRequestMessage)
 PassRequestMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
 )
 all_structs.append(StaminaMessage)
 StaminaMessage.thrift_spec = (
@@ -14425,45 +14425,45 @@ StaminaCapacityMessage.thrift_spec = (
 all_structs.append(DribbleMessage)
 DribbleMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.I32, 'queue_count', None, None, ),  # 2
 )
 all_structs.append(BallGoalieMessage)
 BallGoalieMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ball_position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'ball_velocity', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'goalie_position', [ThriftVector2D, None], None, ),  # 3
+    (1, TType.STRUCT, 'ball_position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'ball_velocity', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'goalie_position', [RpcVector2D, None], None, ),  # 3
     (4, TType.DOUBLE, 'goalie_body_direction', None, None, ),  # 4
 )
 all_structs.append(OnePlayerMessage)
 OnePlayerMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 2
 )
 all_structs.append(TwoPlayerMessage)
 TwoPlayerMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'first_uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'first_position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'first_position', [RpcVector2D, None], None, ),  # 2
     (3, TType.I32, 'second_uniform_number', None, None, ),  # 3
-    (4, TType.STRUCT, 'second_position', [ThriftVector2D, None], None, ),  # 4
+    (4, TType.STRUCT, 'second_position', [RpcVector2D, None], None, ),  # 4
 )
 all_structs.append(ThreePlayerMessage)
 ThreePlayerMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'first_uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'first_position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'first_position', [RpcVector2D, None], None, ),  # 2
     (3, TType.I32, 'second_uniform_number', None, None, ),  # 3
-    (4, TType.STRUCT, 'second_position', [ThriftVector2D, None], None, ),  # 4
+    (4, TType.STRUCT, 'second_position', [RpcVector2D, None], None, ),  # 4
     (5, TType.I32, 'third_uniform_number', None, None, ),  # 5
-    (6, TType.STRUCT, 'third_position', [ThriftVector2D, None], None, ),  # 6
+    (6, TType.STRUCT, 'third_position', [RpcVector2D, None], None, ),  # 6
 )
 all_structs.append(SelfMessage)
 SelfMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'self_position', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'self_position', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'self_body_direction', None, None, ),  # 2
     (3, TType.DOUBLE, 'self_stamina', None, None, ),  # 3
 )
@@ -14471,23 +14471,23 @@ all_structs.append(TeammateMessage)
 TeammateMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'body_direction', None, None, ),  # 3
 )
 all_structs.append(OpponentMessage)
 OpponentMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'uniform_number', None, None, ),  # 1
-    (2, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'body_direction', None, None, ),  # 3
 )
 all_structs.append(BallPlayerMessage)
 BallPlayerMessage.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'ball_position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'ball_velocity', [ThriftVector2D, None], None, ),  # 2
+    (1, TType.STRUCT, 'ball_position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'ball_velocity', [RpcVector2D, None], None, ),  # 2
     (3, TType.I32, 'uniform_number', None, None, ),  # 3
-    (4, TType.STRUCT, 'player_position', [ThriftVector2D, None], None, ),  # 4
+    (4, TType.STRUCT, 'player_position', [RpcVector2D, None], None, ),  # 4
     (5, TType.DOUBLE, 'body_direction', None, None, ),  # 5
 )
 all_structs.append(Say)
@@ -14544,22 +14544,22 @@ all_structs.append(AddPoint)
 AddPoint.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'point', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'point', [RpcVector2D, None], None, ),  # 2
     (3, TType.STRING, 'color', 'UTF8', None, ),  # 3
 )
 all_structs.append(AddLine)
 AddLine.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'start_point', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'end_point', [ThriftVector2D, None], None, ),  # 3
+    (2, TType.STRUCT, 'start_point', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'end_point', [RpcVector2D, None], None, ),  # 3
     (4, TType.STRING, 'color', 'UTF8', None, ),  # 4
 )
 all_structs.append(AddArc)
 AddArc.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'center', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'center', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'radius', None, None, ),  # 3
     (4, TType.DOUBLE, 'start_angle', None, None, ),  # 4
     (5, TType.DOUBLE, 'span_angel', None, None, ),  # 5
@@ -14569,7 +14569,7 @@ all_structs.append(AddCircle)
 AddCircle.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'center', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'center', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'radius', None, None, ),  # 3
     (4, TType.STRING, 'color', 'UTF8', None, ),  # 4
     (5, TType.BOOL, 'fill', None, None, ),  # 5
@@ -14578,9 +14578,9 @@ all_structs.append(AddTriangle)
 AddTriangle.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'point1', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'point2', [ThriftVector2D, None], None, ),  # 3
-    (4, TType.STRUCT, 'point3', [ThriftVector2D, None], None, ),  # 4
+    (2, TType.STRUCT, 'point1', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'point2', [RpcVector2D, None], None, ),  # 3
+    (4, TType.STRUCT, 'point3', [RpcVector2D, None], None, ),  # 4
     (5, TType.STRING, 'color', 'UTF8', None, ),  # 5
     (6, TType.BOOL, 'fill', None, None, ),  # 6
 )
@@ -14599,7 +14599,7 @@ all_structs.append(AddSector)
 AddSector.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'center', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'center', [RpcVector2D, None], None, ),  # 2
     (3, TType.DOUBLE, 'min_radius', None, None, ),  # 3
     (4, TType.DOUBLE, 'max_radius', None, None, ),  # 4
     (5, TType.DOUBLE, 'start_angle', None, None, ),  # 5
@@ -14611,7 +14611,7 @@ all_structs.append(AddMessage)
 AddMessage.thrift_spec = (
     None,  # 0
     (1, TType.I32, 'level', None, None, ),  # 1
-    (2, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 2
     (3, TType.STRING, 'message', 'UTF8', None, ),  # 3
     (4, TType.STRING, 'color', 'UTF8', None, ),  # 4
 )
@@ -14636,14 +14636,14 @@ DebugClient.thrift_spec = (
 all_structs.append(Body_GoToPoint)
 Body_GoToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'distance_threshold', None, None, ),  # 2
     (3, TType.DOUBLE, 'max_dash_power', None, None, ),  # 3
 )
 all_structs.append(Body_SmartKick)
 Body_SmartKick.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'first_speed', None, None, ),  # 2
     (3, TType.DOUBLE, 'first_speed_threshold', None, None, ),  # 3
     (4, TType.I32, 'max_steps', None, None, ),  # 4
@@ -14651,7 +14651,7 @@ Body_SmartKick.thrift_spec = (
 all_structs.append(Bhv_BeforeKickOff)
 Bhv_BeforeKickOff.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'point', [RpcVector2D, None], None, ),  # 1
 )
 all_structs.append(Bhv_BodyNeckToBall)
 Bhv_BodyNeckToBall.thrift_spec = (
@@ -14659,7 +14659,7 @@ Bhv_BodyNeckToBall.thrift_spec = (
 all_structs.append(Bhv_BodyNeckToPoint)
 Bhv_BodyNeckToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'point', [RpcVector2D, None], None, ),  # 1
 )
 all_structs.append(Bhv_Emergency)
 Bhv_Emergency.thrift_spec = (
@@ -14667,7 +14667,7 @@ Bhv_Emergency.thrift_spec = (
 all_structs.append(Bhv_GoToPointLookBall)
 Bhv_GoToPointLookBall.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'distance_threshold', None, None, ),  # 2
     (3, TType.DOUBLE, 'max_dash_power', None, None, ),  # 3
 )
@@ -14679,7 +14679,7 @@ Bhv_NeckBodyToBall.thrift_spec = (
 all_structs.append(Bhv_NeckBodyToPoint)
 Bhv_NeckBodyToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'angle_buf', None, None, ),  # 2
 )
 all_structs.append(Bhv_ScanField)
@@ -14694,7 +14694,7 @@ Body_ClearBall.thrift_spec = (
 all_structs.append(Body_Dribble)
 Body_Dribble.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'distance_threshold', None, None, ),  # 2
     (3, TType.DOUBLE, 'dash_power', None, None, ),  # 3
     (4, TType.I32, 'dash_count', None, None, ),  # 4
@@ -14703,26 +14703,26 @@ Body_Dribble.thrift_spec = (
 all_structs.append(Body_GoToPointDodge)
 Body_GoToPointDodge.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'dash_power', None, None, ),  # 2
 )
 all_structs.append(Body_HoldBall)
 Body_HoldBall.thrift_spec = (
     None,  # 0
     (1, TType.BOOL, 'do_turn', None, None, ),  # 1
-    (2, TType.STRUCT, 'turn_target_point', [ThriftVector2D, None], None, ),  # 2
-    (3, TType.STRUCT, 'kick_target_point', [ThriftVector2D, None], None, ),  # 3
+    (2, TType.STRUCT, 'turn_target_point', [RpcVector2D, None], None, ),  # 2
+    (3, TType.STRUCT, 'kick_target_point', [RpcVector2D, None], None, ),  # 3
 )
 all_structs.append(Body_Intercept)
 Body_Intercept.thrift_spec = (
     None,  # 0
     (1, TType.BOOL, 'save_recovery', None, None, ),  # 1
-    (2, TType.STRUCT, 'face_point', [ThriftVector2D, None], None, ),  # 2
+    (2, TType.STRUCT, 'face_point', [RpcVector2D, None], None, ),  # 2
 )
 all_structs.append(Body_KickOneStep)
 Body_KickOneStep.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'first_speed', None, None, ),  # 2
     (3, TType.BOOL, 'force_mode', None, None, ),  # 3
 )
@@ -14737,7 +14737,7 @@ Body_StopDash.thrift_spec = (
 all_structs.append(Body_TackleToPoint)
 Body_TackleToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.DOUBLE, 'min_probability', None, None, ),  # 2
     (3, TType.DOUBLE, 'min_speed', None, None, ),  # 3
 )
@@ -14754,13 +14754,13 @@ Body_TurnToBall.thrift_spec = (
 all_structs.append(Body_TurnToPoint)
 Body_TurnToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
     (2, TType.I32, 'cycle', None, None, ),  # 2
 )
 all_structs.append(Focus_MoveToPoint)
 Focus_MoveToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
 )
 all_structs.append(Focus_Reset)
 Focus_Reset.thrift_spec = (
@@ -14804,7 +14804,7 @@ Neck_TurnToPlayerOrScan.thrift_spec = (
 all_structs.append(Neck_TurnToPoint)
 Neck_TurnToPoint.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'target_point', [ThriftVector2D, None], None, ),  # 1
+    (1, TType.STRUCT, 'target_point', [RpcVector2D, None], None, ),  # 1
 )
 all_structs.append(Neck_TurnToRelative)
 Neck_TurnToRelative.thrift_spec = (
@@ -14968,15 +14968,15 @@ DoKickOff.thrift_spec = (
 all_structs.append(DoMoveBall)
 DoMoveBall.thrift_spec = (
     None,  # 0
-    (1, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 1
-    (2, TType.STRUCT, 'velocity', [ThriftVector2D, None], None, ),  # 2
+    (1, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 1
+    (2, TType.STRUCT, 'velocity', [RpcVector2D, None], None, ),  # 2
 )
 all_structs.append(DoMovePlayer)
 DoMovePlayer.thrift_spec = (
     None,  # 0
     (1, TType.BOOL, 'our_side', None, None, ),  # 1
     (2, TType.I32, 'uniform_number', None, None, ),  # 2
-    (3, TType.STRUCT, 'position', [ThriftVector2D, None], None, ),  # 3
+    (3, TType.STRUCT, 'position', [RpcVector2D, None], None, ),  # 3
     (4, TType.DOUBLE, 'body_direction', None, None, ),  # 4
 )
 all_structs.append(DoRecover)

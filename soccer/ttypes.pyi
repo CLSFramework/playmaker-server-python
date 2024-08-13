@@ -12,7 +12,7 @@ class AgentType(Enum):
     CoachT = auto()
     TrainerT = auto()
 
-class ThriftVector2D(object):
+class RpcVector2D(object):
     def __init__(self, x: float = None, y: float = None, dist: float = None, angle: float = None):
         pass
     x: float
@@ -21,15 +21,15 @@ class ThriftVector2D(object):
     angle: float
 
 class Ball(object):
-    def __init__(self, position: ThriftVector2D = None, relative_position: ThriftVector2D = None, seen_position: ThriftVector2D = None, heard_position: ThriftVector2D = None, velocity: ThriftVector2D = None, seen_velocity: ThriftVector2D = None, heard_velocity: ThriftVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, heard_vel_count: int = None, lost_count: int = None, ghost_count: int = None, dist_from_self: float = None, angle_from_self: float = None):
+    def __init__(self, position: RpcVector2D = None, relative_position: RpcVector2D = None, seen_position: RpcVector2D = None, heard_position: RpcVector2D = None, velocity: RpcVector2D = None, seen_velocity: RpcVector2D = None, heard_velocity: RpcVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, heard_vel_count: int = None, lost_count: int = None, ghost_count: int = None, dist_from_self: float = None, angle_from_self: float = None):
         pass
-    position: ThriftVector2D
-    relative_position: ThriftVector2D
-    seen_position: ThriftVector2D
-    heard_position: ThriftVector2D
-    velocity: ThriftVector2D
-    seen_velocity: ThriftVector2D
-    heard_velocity: ThriftVector2D
+    position: RpcVector2D
+    relative_position: RpcVector2D
+    seen_position: RpcVector2D
+    heard_position: RpcVector2D
+    velocity: RpcVector2D
+    seen_velocity: RpcVector2D
+    heard_velocity: RpcVector2D
     pos_count: int
     seen_pos_count: int
     heard_pos_count: int
@@ -71,13 +71,13 @@ class LoggerLevel(Enum):
     PLAN = auto()
 
 class Player(object):
-    def __init__(self, position: ThriftVector2D = None, seen_position: ThriftVector2D = None, heard_position: ThriftVector2D = None, velocity: ThriftVector2D = None, seen_velocity: ThriftVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, ghost_count: int = None, dist_from_self: float = None, angle_from_self: float = None, id: int = None, side: Side = None, uniform_number: int = None, uniform_number_count: int = None, is_goalie: bool = None, body_direction: float = None, body_direction_count: int = None, face_direction: float = None, face_direction_count: int = None, point_to_direction: float = None, point_to_direction_count: int = None, is_kicking: bool = None, dist_from_ball: float = None, angle_from_ball: float = None, ball_reach_steps: int = None, is_tackling: bool = None, type_id: int = None):
+    def __init__(self, position: RpcVector2D = None, seen_position: RpcVector2D = None, heard_position: RpcVector2D = None, velocity: RpcVector2D = None, seen_velocity: RpcVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, ghost_count: int = None, dist_from_self: float = None, angle_from_self: float = None, id: int = None, side: Side = None, uniform_number: int = None, uniform_number_count: int = None, is_goalie: bool = None, body_direction: float = None, body_direction_count: int = None, face_direction: float = None, face_direction_count: int = None, point_to_direction: float = None, point_to_direction_count: int = None, is_kicking: bool = None, dist_from_ball: float = None, angle_from_ball: float = None, ball_reach_steps: int = None, is_tackling: bool = None, type_id: int = None):
         pass
-    position: ThriftVector2D
-    seen_position: ThriftVector2D
-    heard_position: ThriftVector2D
-    velocity: ThriftVector2D
-    seen_velocity: ThriftVector2D
+    position: RpcVector2D
+    seen_position: RpcVector2D
+    heard_position: RpcVector2D
+    velocity: RpcVector2D
+    seen_velocity: RpcVector2D
     pos_count: int
     seen_pos_count: int
     heard_pos_count: int
@@ -105,13 +105,13 @@ class Player(object):
     type_id: int
 
 class Self(object):
-    def __init__(self, position: ThriftVector2D = None, seen_position: ThriftVector2D = None, heard_position: ThriftVector2D = None, velocity: ThriftVector2D = None, seen_velocity: ThriftVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, ghost_count: int = None, id: int = None, side: Side = None, uniform_number: int = None, uniform_number_count: int = None, is_goalie: bool = None, body_direction: float = None, body_direction_count: int = None, face_direction: float = None, face_direction_count: int = None, point_to_direction: float = None, point_to_direction_count: int = None, is_kicking: bool = None, dist_from_ball: float = None, angle_from_ball: float = None, ball_reach_steps: int = None, is_tackling: bool = None, relative_neck_direction: float = None, stamina: float = None, is_kickable: bool = None, catch_probability: float = None, tackle_probability: float = None, foul_probability: float = None, view_width: ViewWidth = None, type_id: int = None, kick_rate: float = None):
+    def __init__(self, position: RpcVector2D = None, seen_position: RpcVector2D = None, heard_position: RpcVector2D = None, velocity: RpcVector2D = None, seen_velocity: RpcVector2D = None, pos_count: int = None, seen_pos_count: int = None, heard_pos_count: int = None, vel_count: int = None, seen_vel_count: int = None, ghost_count: int = None, id: int = None, side: Side = None, uniform_number: int = None, uniform_number_count: int = None, is_goalie: bool = None, body_direction: float = None, body_direction_count: int = None, face_direction: float = None, face_direction_count: int = None, point_to_direction: float = None, point_to_direction_count: int = None, is_kicking: bool = None, dist_from_ball: float = None, angle_from_ball: float = None, ball_reach_steps: int = None, is_tackling: bool = None, relative_neck_direction: float = None, stamina: float = None, is_kickable: bool = None, catch_probability: float = None, tackle_probability: float = None, foul_probability: float = None, view_width: ViewWidth = None, type_id: int = None, kick_rate: float = None):
         pass
-    position: ThriftVector2D
-    seen_position: ThriftVector2D
-    heard_position: ThriftVector2D
-    velocity: ThriftVector2D
-    seen_velocity: ThriftVector2D
+    position: RpcVector2D
+    seen_position: RpcVector2D
+    heard_position: RpcVector2D
+    velocity: RpcVector2D
+    seen_velocity: RpcVector2D
     pos_count: int
     seen_pos_count: int
     heard_pos_count: int
@@ -151,7 +151,7 @@ class InterceptActionType(Enum):
     TURN_BACKWARD_DASH = auto()
 
 class InterceptInfo(object):
-    def __init__(self, action_type: InterceptActionType = None, turn_steps: int = None, turn_angle: float = None, dash_steps: int = None, dash_power: float = None, dash_dir: float = None, final_self_position: ThriftVector2D = None, final_ball_dist: float = None, final_stamina: float = None, value: float = None):
+    def __init__(self, action_type: InterceptActionType = None, turn_steps: int = None, turn_angle: float = None, dash_steps: int = None, dash_power: float = None, dash_dir: float = None, final_self_position: RpcVector2D = None, final_ball_dist: float = None, final_stamina: float = None, value: float = None):
         pass
     action_type: InterceptActionType
     turn_steps: int
@@ -159,7 +159,7 @@ class InterceptInfo(object):
     dash_steps: int
     dash_power: float
     dash_dir: float
-    final_self_position: ThriftVector2D
+    final_self_position: RpcVector2D
     final_ball_dist: float
     final_stamina: float
     value: float
@@ -214,7 +214,7 @@ class GameModeType(Enum):
     MODE_MAX = auto()
 
 class WorldModel(object):
-    def __init__(self, intercept_table: InterceptTable = None, our_team_name: str = None, their_team_name: str = None, our_side: Side = None, last_set_play_start_time: int = None, myself: Self = None, ball: Ball = None, teammates: List[Player] = None, opponents: List[Player] = None, unknowns: List[Player] = None, our_players_dict: Dict[int, Player] = None, their_players_dict: Dict[int, Player] = None, our_goalie_uniform_number: int = None, their_goalie_uniform_number: int = None, offside_line_x: float = None, offside_line_x_count: int = None, kickable_teammate_id: int = None, kickable_opponent_id: int = None, last_kick_side: Side = None, last_kicker_uniform_number: int = None, cycle: int = None, game_mode_type: GameModeType = None, left_team_score: int = None, right_team_score: int = None, is_our_set_play: bool = None, is_their_set_play: bool = None, stoped_cycle: int = None, our_team_score: int = None, their_team_score: int = None, is_penalty_kick_mode: bool = None, helios_home_positions: Dict[int, ThriftVector2D] = None):
+    def __init__(self, intercept_table: InterceptTable = None, our_team_name: str = None, their_team_name: str = None, our_side: Side = None, last_set_play_start_time: int = None, myself: Self = None, ball: Ball = None, teammates: List[Player] = None, opponents: List[Player] = None, unknowns: List[Player] = None, our_players_dict: Dict[int, Player] = None, their_players_dict: Dict[int, Player] = None, our_goalie_uniform_number: int = None, their_goalie_uniform_number: int = None, offside_line_x: float = None, offside_line_x_count: int = None, kickable_teammate_id: int = None, kickable_opponent_id: int = None, last_kick_side: Side = None, last_kicker_uniform_number: int = None, cycle: int = None, game_mode_type: GameModeType = None, left_team_score: int = None, right_team_score: int = None, is_our_set_play: bool = None, is_their_set_play: bool = None, stoped_cycle: int = None, our_team_score: int = None, their_team_score: int = None, is_penalty_kick_mode: bool = None, helios_home_positions: Dict[int, RpcVector2D] = None):
         pass
     intercept_table: InterceptTable
     our_team_name: str
@@ -246,7 +246,7 @@ class WorldModel(object):
     our_team_score: int
     their_team_score: int
     is_penalty_kick_mode: bool
-    helios_home_positions: Dict[int, ThriftVector2D]
+    helios_home_positions: Dict[int, RpcVector2D]
 
 class State(object):
     def __init__(self, agent_type: AgentType = None, world_model: WorldModel = None, full_world_model: WorldModel = None):
@@ -306,18 +306,18 @@ class ChangeView(object):
     view_width: ViewWidth
 
 class BallMessage(object):
-    def __init__(self, ball_position: ThriftVector2D = None, ball_velocity: ThriftVector2D = None):
+    def __init__(self, ball_position: RpcVector2D = None, ball_velocity: RpcVector2D = None):
         pass
-    ball_position: ThriftVector2D
-    ball_velocity: ThriftVector2D
+    ball_position: RpcVector2D
+    ball_velocity: RpcVector2D
 
 class PassMessage(object):
-    def __init__(self, receiver_uniform_number: int = None, receiver_point: ThriftVector2D = None, ball_position: ThriftVector2D = None, ball_velocity: ThriftVector2D = None):
+    def __init__(self, receiver_uniform_number: int = None, receiver_point: RpcVector2D = None, ball_position: RpcVector2D = None, ball_velocity: RpcVector2D = None):
         pass
     receiver_uniform_number: int
-    receiver_point: ThriftVector2D
-    ball_position: ThriftVector2D
-    ball_velocity: ThriftVector2D
+    receiver_point: RpcVector2D
+    ball_position: RpcVector2D
+    ball_velocity: RpcVector2D
 
 class InterceptMessage(object):
     def __init__(self, our: bool = None, uniform_number: int = None, cycle: int = None):
@@ -327,20 +327,20 @@ class InterceptMessage(object):
     cycle: int
 
 class GoalieMessage(object):
-    def __init__(self, goalie_uniform_number: int = None, goalie_position: ThriftVector2D = None, goalie_body_direction: float = None):
+    def __init__(self, goalie_uniform_number: int = None, goalie_position: RpcVector2D = None, goalie_body_direction: float = None):
         pass
     goalie_uniform_number: int
-    goalie_position: ThriftVector2D
+    goalie_position: RpcVector2D
     goalie_body_direction: float
 
 class GoalieAndPlayerMessage(object):
-    def __init__(self, goalie_uniform_number: int = None, goalie_position: ThriftVector2D = None, goalie_body_direction: float = None, player_uniform_number: int = None, player_position: ThriftVector2D = None):
+    def __init__(self, goalie_uniform_number: int = None, goalie_position: RpcVector2D = None, goalie_body_direction: float = None, player_uniform_number: int = None, player_position: RpcVector2D = None):
         pass
     goalie_uniform_number: int
-    goalie_position: ThriftVector2D
+    goalie_position: RpcVector2D
     goalie_body_direction: float
     player_uniform_number: int
-    player_position: ThriftVector2D
+    player_position: RpcVector2D
 
 class OffsideLineMessage(object):
     def __init__(self, offside_line_x: float = None):
@@ -363,9 +363,9 @@ class SetplayMessage(object):
     wait_step: int
 
 class PassRequestMessage(object):
-    def __init__(self, target_point: ThriftVector2D = None):
+    def __init__(self, target_point: RpcVector2D = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
 
 class StaminaMessage(object):
     def __init__(self, stamina: float = None):
@@ -383,71 +383,71 @@ class StaminaCapacityMessage(object):
     stamina_capacity: float
 
 class DribbleMessage(object):
-    def __init__(self, target_point: ThriftVector2D = None, queue_count: int = None):
+    def __init__(self, target_point: RpcVector2D = None, queue_count: int = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     queue_count: int
 
 class BallGoalieMessage(object):
-    def __init__(self, ball_position: ThriftVector2D = None, ball_velocity: ThriftVector2D = None, goalie_position: ThriftVector2D = None, goalie_body_direction: float = None):
+    def __init__(self, ball_position: RpcVector2D = None, ball_velocity: RpcVector2D = None, goalie_position: RpcVector2D = None, goalie_body_direction: float = None):
         pass
-    ball_position: ThriftVector2D
-    ball_velocity: ThriftVector2D
-    goalie_position: ThriftVector2D
+    ball_position: RpcVector2D
+    ball_velocity: RpcVector2D
+    goalie_position: RpcVector2D
     goalie_body_direction: float
 
 class OnePlayerMessage(object):
-    def __init__(self, uniform_number: int = None, position: ThriftVector2D = None):
+    def __init__(self, uniform_number: int = None, position: RpcVector2D = None):
         pass
     uniform_number: int
-    position: ThriftVector2D
+    position: RpcVector2D
 
 class TwoPlayerMessage(object):
-    def __init__(self, first_uniform_number: int = None, first_position: ThriftVector2D = None, second_uniform_number: int = None, second_position: ThriftVector2D = None):
+    def __init__(self, first_uniform_number: int = None, first_position: RpcVector2D = None, second_uniform_number: int = None, second_position: RpcVector2D = None):
         pass
     first_uniform_number: int
-    first_position: ThriftVector2D
+    first_position: RpcVector2D
     second_uniform_number: int
-    second_position: ThriftVector2D
+    second_position: RpcVector2D
 
 class ThreePlayerMessage(object):
-    def __init__(self, first_uniform_number: int = None, first_position: ThriftVector2D = None, second_uniform_number: int = None, second_position: ThriftVector2D = None, third_uniform_number: int = None, third_position: ThriftVector2D = None):
+    def __init__(self, first_uniform_number: int = None, first_position: RpcVector2D = None, second_uniform_number: int = None, second_position: RpcVector2D = None, third_uniform_number: int = None, third_position: RpcVector2D = None):
         pass
     first_uniform_number: int
-    first_position: ThriftVector2D
+    first_position: RpcVector2D
     second_uniform_number: int
-    second_position: ThriftVector2D
+    second_position: RpcVector2D
     third_uniform_number: int
-    third_position: ThriftVector2D
+    third_position: RpcVector2D
 
 class SelfMessage(object):
-    def __init__(self, self_position: ThriftVector2D = None, self_body_direction: float = None, self_stamina: float = None):
+    def __init__(self, self_position: RpcVector2D = None, self_body_direction: float = None, self_stamina: float = None):
         pass
-    self_position: ThriftVector2D
+    self_position: RpcVector2D
     self_body_direction: float
     self_stamina: float
 
 class TeammateMessage(object):
-    def __init__(self, uniform_number: int = None, position: ThriftVector2D = None, body_direction: float = None):
+    def __init__(self, uniform_number: int = None, position: RpcVector2D = None, body_direction: float = None):
         pass
     uniform_number: int
-    position: ThriftVector2D
+    position: RpcVector2D
     body_direction: float
 
 class OpponentMessage(object):
-    def __init__(self, uniform_number: int = None, position: ThriftVector2D = None, body_direction: float = None):
+    def __init__(self, uniform_number: int = None, position: RpcVector2D = None, body_direction: float = None):
         pass
     uniform_number: int
-    position: ThriftVector2D
+    position: RpcVector2D
     body_direction: float
 
 class BallPlayerMessage(object):
-    def __init__(self, ball_position: ThriftVector2D = None, ball_velocity: ThriftVector2D = None, uniform_number: int = None, player_position: ThriftVector2D = None, body_direction: float = None):
+    def __init__(self, ball_position: RpcVector2D = None, ball_velocity: RpcVector2D = None, uniform_number: int = None, player_position: RpcVector2D = None, body_direction: float = None):
         pass
-    ball_position: ThriftVector2D
-    ball_velocity: ThriftVector2D
+    ball_position: RpcVector2D
+    ball_velocity: RpcVector2D
     uniform_number: int
-    player_position: ThriftVector2D
+    player_position: RpcVector2D
     body_direction: float
 
 class Say(object):
@@ -505,46 +505,46 @@ class AddText(object):
     message: str
 
 class AddPoint(object):
-    def __init__(self, level: LoggerLevel = None, point: ThriftVector2D = None, color: str = None):
+    def __init__(self, level: LoggerLevel = None, point: RpcVector2D = None, color: str = None):
         pass
     level: LoggerLevel
-    point: ThriftVector2D
+    point: RpcVector2D
     color: str
 
 class AddLine(object):
-    def __init__(self, level: LoggerLevel = None, start_point: ThriftVector2D = None, end_point: ThriftVector2D = None, color: str = None):
+    def __init__(self, level: LoggerLevel = None, start_point: RpcVector2D = None, end_point: RpcVector2D = None, color: str = None):
         pass
     level: LoggerLevel
-    start_point: ThriftVector2D
-    end_point: ThriftVector2D
+    start_point: RpcVector2D
+    end_point: RpcVector2D
     color: str
 
 class AddArc(object):
-    def __init__(self, level: LoggerLevel = None, center: ThriftVector2D = None, radius: float = None, start_angle: float = None, span_angel: float = None, color: str = None):
+    def __init__(self, level: LoggerLevel = None, center: RpcVector2D = None, radius: float = None, start_angle: float = None, span_angel: float = None, color: str = None):
         pass
     level: LoggerLevel
-    center: ThriftVector2D
+    center: RpcVector2D
     radius: float
     start_angle: float
     span_angel: float
     color: str
 
 class AddCircle(object):
-    def __init__(self, level: LoggerLevel = None, center: ThriftVector2D = None, radius: float = None, color: str = None, fill: bool = None):
+    def __init__(self, level: LoggerLevel = None, center: RpcVector2D = None, radius: float = None, color: str = None, fill: bool = None):
         pass
     level: LoggerLevel
-    center: ThriftVector2D
+    center: RpcVector2D
     radius: float
     color: str
     fill: bool
 
 class AddTriangle(object):
-    def __init__(self, level: LoggerLevel = None, point1: ThriftVector2D = None, point2: ThriftVector2D = None, point3: ThriftVector2D = None, color: str = None, fill: bool = None):
+    def __init__(self, level: LoggerLevel = None, point1: RpcVector2D = None, point2: RpcVector2D = None, point3: RpcVector2D = None, color: str = None, fill: bool = None):
         pass
     level: LoggerLevel
-    point1: ThriftVector2D
-    point2: ThriftVector2D
-    point3: ThriftVector2D
+    point1: RpcVector2D
+    point2: RpcVector2D
+    point3: RpcVector2D
     color: str
     fill: bool
 
@@ -560,10 +560,10 @@ class AddRectangle(object):
     fill: bool
 
 class AddSector(object):
-    def __init__(self, level: LoggerLevel = None, center: ThriftVector2D = None, min_radius: float = None, max_radius: float = None, start_angle: float = None, span_angel: float = None, color: str = None, fill: bool = None):
+    def __init__(self, level: LoggerLevel = None, center: RpcVector2D = None, min_radius: float = None, max_radius: float = None, start_angle: float = None, span_angel: float = None, color: str = None, fill: bool = None):
         pass
     level: LoggerLevel
-    center: ThriftVector2D
+    center: RpcVector2D
     min_radius: float
     max_radius: float
     start_angle: float
@@ -572,10 +572,10 @@ class AddSector(object):
     fill: bool
 
 class AddMessage(object):
-    def __init__(self, level: LoggerLevel = None, position: ThriftVector2D = None, message: str = None, color: str = None):
+    def __init__(self, level: LoggerLevel = None, position: RpcVector2D = None, message: str = None, color: str = None):
         pass
     level: LoggerLevel
-    position: ThriftVector2D
+    position: RpcVector2D
     message: str
     color: str
 
@@ -598,24 +598,24 @@ class DebugClient(object):
     message: str
 
 class Body_GoToPoint(object):
-    def __init__(self, target_point: ThriftVector2D = None, distance_threshold: float = None, max_dash_power: float = None):
+    def __init__(self, target_point: RpcVector2D = None, distance_threshold: float = None, max_dash_power: float = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     distance_threshold: float
     max_dash_power: float
 
 class Body_SmartKick(object):
-    def __init__(self, target_point: ThriftVector2D = None, first_speed: float = None, first_speed_threshold: float = None, max_steps: int = None):
+    def __init__(self, target_point: RpcVector2D = None, first_speed: float = None, first_speed_threshold: float = None, max_steps: int = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     first_speed: float
     first_speed_threshold: float
     max_steps: int
 
 class Bhv_BeforeKickOff(object):
-    def __init__(self, point: ThriftVector2D = None):
+    def __init__(self, point: RpcVector2D = None):
         pass
-    point: ThriftVector2D
+    point: RpcVector2D
 
 class Bhv_BodyNeckToBall(object):
     def __init__(self, ):
@@ -623,9 +623,9 @@ class Bhv_BodyNeckToBall(object):
     pass
 
 class Bhv_BodyNeckToPoint(object):
-    def __init__(self, point: ThriftVector2D = None):
+    def __init__(self, point: RpcVector2D = None):
         pass
-    point: ThriftVector2D
+    point: RpcVector2D
 
 class Bhv_Emergency(object):
     def __init__(self, ):
@@ -633,9 +633,9 @@ class Bhv_Emergency(object):
     pass
 
 class Bhv_GoToPointLookBall(object):
-    def __init__(self, target_point: ThriftVector2D = None, distance_threshold: float = None, max_dash_power: float = None):
+    def __init__(self, target_point: RpcVector2D = None, distance_threshold: float = None, max_dash_power: float = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     distance_threshold: float
     max_dash_power: float
 
@@ -645,9 +645,9 @@ class Bhv_NeckBodyToBall(object):
     angle_buf: float
 
 class Bhv_NeckBodyToPoint(object):
-    def __init__(self, point: ThriftVector2D = None, angle_buf: float = None):
+    def __init__(self, point: RpcVector2D = None, angle_buf: float = None):
         pass
-    point: ThriftVector2D
+    point: RpcVector2D
     angle_buf: float
 
 class Bhv_ScanField(object):
@@ -666,37 +666,37 @@ class Body_ClearBall(object):
     pass
 
 class Body_Dribble(object):
-    def __init__(self, target_point: ThriftVector2D = None, distance_threshold: float = None, dash_power: float = None, dash_count: int = None, dodge: bool = None):
+    def __init__(self, target_point: RpcVector2D = None, distance_threshold: float = None, dash_power: float = None, dash_count: int = None, dodge: bool = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     distance_threshold: float
     dash_power: float
     dash_count: int
     dodge: bool
 
 class Body_GoToPointDodge(object):
-    def __init__(self, target_point: ThriftVector2D = None, dash_power: float = None):
+    def __init__(self, target_point: RpcVector2D = None, dash_power: float = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     dash_power: float
 
 class Body_HoldBall(object):
-    def __init__(self, do_turn: bool = None, turn_target_point: ThriftVector2D = None, kick_target_point: ThriftVector2D = None):
+    def __init__(self, do_turn: bool = None, turn_target_point: RpcVector2D = None, kick_target_point: RpcVector2D = None):
         pass
     do_turn: bool
-    turn_target_point: ThriftVector2D
-    kick_target_point: ThriftVector2D
+    turn_target_point: RpcVector2D
+    kick_target_point: RpcVector2D
 
 class Body_Intercept(object):
-    def __init__(self, save_recovery: bool = None, face_point: ThriftVector2D = None):
+    def __init__(self, save_recovery: bool = None, face_point: RpcVector2D = None):
         pass
     save_recovery: bool
-    face_point: ThriftVector2D
+    face_point: RpcVector2D
 
 class Body_KickOneStep(object):
-    def __init__(self, target_point: ThriftVector2D = None, first_speed: float = None, force_mode: bool = None):
+    def __init__(self, target_point: RpcVector2D = None, first_speed: float = None, force_mode: bool = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     first_speed: float
     force_mode: bool
 
@@ -711,9 +711,9 @@ class Body_StopDash(object):
     save_recovery: bool
 
 class Body_TackleToPoint(object):
-    def __init__(self, target_point: ThriftVector2D = None, min_probability: float = None, min_speed: float = None):
+    def __init__(self, target_point: RpcVector2D = None, min_probability: float = None, min_speed: float = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     min_probability: float
     min_speed: float
 
@@ -728,15 +728,15 @@ class Body_TurnToBall(object):
     cycle: int
 
 class Body_TurnToPoint(object):
-    def __init__(self, target_point: ThriftVector2D = None, cycle: int = None):
+    def __init__(self, target_point: RpcVector2D = None, cycle: int = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
     cycle: int
 
 class Focus_MoveToPoint(object):
-    def __init__(self, target_point: ThriftVector2D = None):
+    def __init__(self, target_point: RpcVector2D = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
 
 class Focus_Reset(object):
     def __init__(self, ):
@@ -788,9 +788,9 @@ class Neck_TurnToPlayerOrScan(object):
     count_threshold: int
 
 class Neck_TurnToPoint(object):
-    def __init__(self, target_point: ThriftVector2D = None):
+    def __init__(self, target_point: RpcVector2D = None):
         pass
-    target_point: ThriftVector2D
+    target_point: RpcVector2D
 
 class Neck_TurnToRelative(object):
     def __init__(self, angle: float = None):
@@ -982,17 +982,17 @@ class DoKickOff(object):
     pass
 
 class DoMoveBall(object):
-    def __init__(self, position: ThriftVector2D = None, velocity: ThriftVector2D = None):
+    def __init__(self, position: RpcVector2D = None, velocity: RpcVector2D = None):
         pass
-    position: ThriftVector2D
-    velocity: ThriftVector2D
+    position: RpcVector2D
+    velocity: RpcVector2D
 
 class DoMovePlayer(object):
-    def __init__(self, our_side: bool = None, uniform_number: int = None, position: ThriftVector2D = None, body_direction: float = None):
+    def __init__(self, our_side: bool = None, uniform_number: int = None, position: RpcVector2D = None, body_direction: float = None):
         pass
     our_side: bool
     uniform_number: int
-    position: ThriftVector2D
+    position: RpcVector2D
     body_direction: float
 
 class DoRecover(object):

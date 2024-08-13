@@ -4,7 +4,7 @@ from pyrusgeom.soccer_math import *
 from pyrusgeom.geom_2d import *
 from src.Tools import Tools
 import pyrusgeom.soccer_math as smath
-from soccer.ttypes import LoggerLevel, PlayerAction, Body_GoToPoint, Neck_TurnToBall, DebugClient, GameModeType, ThriftVector2D
+from soccer.ttypes import LoggerLevel, PlayerAction, Body_GoToPoint, Neck_TurnToBall, DebugClient, GameModeType, RpcVector2D
 
 class BHV_Block:
     def __init__(self):
@@ -61,7 +61,7 @@ class BHV_Block:
             agent.add_log_text(LoggerLevel.BLOCK, f"### block cycle: {block_cycle}")
         agent.add_log_text(LoggerLevel.BLOCK, f"### best blocker: {blocker}")
         if blocker == agent.wm.myself.uniform_number:
-            agent.add_action(PlayerAction(body_go_to_point=Body_GoToPoint(target_point=ThriftVector2D(x=block_pos.x(), y=block_pos.y()), distance_threshold=0.5, max_dash_power=100)))
+            agent.add_action(PlayerAction(body_go_to_point=Body_GoToPoint(target_point=RpcVector2D(x=block_pos.x(), y=block_pos.y()), distance_threshold=0.5, max_dash_power=100)))
             agent.add_action(PlayerAction(neck_turn_to_ball=Neck_TurnToBall()))
             agent.add_action(PlayerAction(debug_client=DebugClient(message=f"blocker: {blocker}")))
             return True

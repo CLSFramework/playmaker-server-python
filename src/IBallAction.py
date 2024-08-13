@@ -7,7 +7,7 @@ from src.IAgent import IAgent
 import pyrusgeom.soccer_math as smath
 from src.Tools import Tools
 from soccer.ttypes import HeliosGoalie, HeliosPenalty, HeliosSetPlay, GameModeType, PlayerAction
-from soccer.ttypes import PlayerType, LoggerLevel, ThriftVector2D, LoggerLevel, Player
+from soccer.ttypes import PlayerType, LoggerLevel, RpcVector2D, LoggerLevel, Player
 
     
 class ActionType(Enum):

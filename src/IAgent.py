@@ -2,7 +2,7 @@ from typing import Union
 from abc import ABC, abstractmethod
 from src.IPositionStrategy import IPositionStrategy
 from typing import Union
-from soccer.ttypes import PlayerAction, PlayerActions, CoachAction, TrainerAction, ServerParam, PlayerParam, PlayerType, Log, AddText, AddMessage, AddCircle, ThriftVector2D, LoggerLevel
+from soccer.ttypes import PlayerAction, PlayerActions, CoachAction, TrainerAction, ServerParam, PlayerParam, PlayerType, Log, AddText, AddMessage, AddCircle, RpcVector2D, LoggerLevel
 from soccer.ttypes import WorldModel
 
 
@@ -65,7 +65,7 @@ class IAgent(ABC):
                 add_message=AddMessage(
                     level=level,
                     message=message,
-                    position=ThriftVector2D(x=x, y=y),
+                    position=RpcVector2D(x=x, y=y),
                     color=color,
                 )
             )
@@ -79,7 +79,7 @@ class IAgent(ABC):
             log=Log(
                 add_circle=AddCircle(
                     level=level,
-                    center=ThriftVector2D(x=center_x, y=center_y),
+                    center=RpcVector2D(x=center_x, y=center_y),
                     radius=radius,
                     color=color,
                     fill=fill

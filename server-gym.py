@@ -11,7 +11,7 @@ import gym
 from gym import spaces
 import numpy as np
 from typing import Union
-from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions, WorldModel, Self, ThriftVector2D, Dash, PlayerAction
+from soccer.ttypes import State, Empty, PlayerActions, CoachActions, TrainerActions, WorldModel, Self, RpcVector2D, Dash, PlayerAction
 from soccer.ttypes import ServerParam, PlayerParam, PlayerType, InitMessage, RegisterRequest, RegisterResponse, AgentType, TrainerAction, DoMoveBall, DoMovePlayer
 from src.SamplePlayerAgent import SamplePlayerAgent
 from src.SampleCoachAgent import SampleCoachAgent
@@ -117,7 +117,7 @@ class GameHandler:
                     our_side=True,
                     uniform_number=1,
                     body_direction=0,
-                    position=ThriftVector2D(x=-45, y=0)
+                    position=RpcVector2D(x=-45, y=0)
                 )
             )
             logging.error("Handler: >>done")

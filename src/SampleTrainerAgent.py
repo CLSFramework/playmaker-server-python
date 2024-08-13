@@ -1,6 +1,6 @@
 from abc import ABC
 from src.IAgent import IAgent
-from soccer.ttypes import TrainerActions, TrainerAction, DoMoveBall, ServerParam, PlayerParam, PlayerType, WorldModel, ThriftVector2D
+from soccer.ttypes import TrainerActions, TrainerAction, DoMoveBall, ServerParam, PlayerParam, PlayerType, WorldModel, RpcVector2D
 
 class SampleTrainerAgent(IAgent, ABC):
     def __init__(self):
@@ -22,11 +22,11 @@ class SampleTrainerAgent(IAgent, ABC):
             actions.actions.append(
                 TrainerAction(
                     do_move_ball=DoMoveBall(
-                        position=ThriftVector2D(
+                        position=RpcVector2D(
                             x=0,
                             y=0
                         ),
-                        velocity=ThriftVector2D(
+                        velocity=RpcVector2D(
                             x=0,
                             y=0
                         ),

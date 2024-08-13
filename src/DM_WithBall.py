@@ -7,7 +7,7 @@ from pyrusgeom.geom_2d import *
 from src.GEN_Pass import GeneratorPass
 from src.IBallAction import BallAction
 import time
-from soccer.ttypes import LoggerLevel, PlayerAction, Body_HoldBall, Neck_ScanField, Body_SmartKick, ThriftVector2D, HeliosChainAction
+from soccer.ttypes import LoggerLevel, PlayerAction, Body_HoldBall, Neck_ScanField, Body_SmartKick, RpcVector2D, HeliosChainAction
 
 class WithBallDecisionMaker(IDecisionMaker):
     def __init__(self):
@@ -53,7 +53,7 @@ class WithBallDecisionMaker(IDecisionMaker):
         #     return
         #
         # agent.add_action(PlayerAction(body_smart_kick=Body_SmartKick(
-        #     target_point=ThriftVector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
+        #     target_point=RpcVector2D(x=best_action.targetBallPos.x(), y=best_action.targetBallPos.y()),
         #     first_speed=best_action.firstVelocity.r(),
         #     first_speed_threshold=0.0,
         #     max_steps=3)))
